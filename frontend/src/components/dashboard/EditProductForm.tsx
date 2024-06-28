@@ -13,7 +13,7 @@ import { SelectValue } from "@radix-ui/react-select"
 import AlertMessage from "./AlertMessage"
 
 const formSchema = z.object({
-    productName: z.string().min(3, { message: "Name is too short" }).max(32, { message: "Name is too long" }),
+    productName: z.string().min(3, { message: "Name is too short" }).max(48, { message: "Name is too long" }),
     productPrice: z.number({ invalid_type_error: "Price must be a number" }).min(0.01, { message: "Price must be greater than 0" }).max(99999, { message: "Price is too high" }),
     inStock: z.string()
 })
@@ -84,7 +84,7 @@ const EditProductForm: React.FC<ProductActionsProps> = ({ product, setProducts }
                      children={(field) => {
                         return (
                             <>
-                                <Label htmlFor="name" className="text-right">
+                                <Label htmlFor={field.name} className="text-right">
                                 Name
                                 </Label>
                                 <Input 
@@ -107,7 +107,7 @@ const EditProductForm: React.FC<ProductActionsProps> = ({ product, setProducts }
                     children={(field) => {
                         return (
                             <>
-                                <Label htmlFor="price" className="text-right">
+                                <Label htmlFor={field.name} className="text-right">
                                 Price ($)
                                 </Label>
                                 <Input
@@ -130,7 +130,7 @@ const EditProductForm: React.FC<ProductActionsProps> = ({ product, setProducts }
                     children={(field) => {
                         return (
                             <>
-                                <Label htmlFor="inStock" className="text-right">
+                                <Label htmlFor={field.name} className="text-right">
                                 In Stock
                                 </Label>
                                 <Select  

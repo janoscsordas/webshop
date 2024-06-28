@@ -42,7 +42,7 @@ function DashboardProducts() {
               <CardDescription className='text-[.8rem]'>By clicking the button below, You will be redirected to the product creation page.</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button><Link to="/admin/dashboard/products/create">Create Product</Link></Button>
+              <Link to="/admin/dashboard/products/create"><Button>Create Product</Button></Link>
             </CardContent>
           </Card>
         </div>

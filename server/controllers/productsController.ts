@@ -1,4 +1,4 @@
-import { getAllProducts, removeProduct, updateProduct } from "../database/products";
+import { getAllProducts, removeProduct, updateProduct, createNewProduct, type CreateProduct } from "../database/products";
 
 type UpdateProduct = {
     id: string
@@ -33,7 +33,7 @@ export async function getProductsController() {
             productName: product.productName,
             productPrice: product.productPrice,
             createdAt: formatProductDate(product.createdAt),
-            inStock: product.inStock == 1 ? "Yes" : "No"
+            inStock: product.inStock == "1" ? "Yes" : "No"
         })
     }
 
@@ -58,4 +58,14 @@ export const updateProductController = async (value: UpdateProduct): Promise<boo
     const isUpdatedProduct = await updateProduct(value)
 
     return isUpdatedProduct
+}
+
+export const createProductController = async (newProductDetails: CreateProduct): Promise<boolean> => {
+    const result = await createNewProduct(newProductDetails)
+
+    if (!result) {
+        return result
+    }
+
+    return result
 }

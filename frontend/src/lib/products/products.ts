@@ -16,6 +16,13 @@ export type UpdateProduct = {
     inStock: string
 }
 
+type CreateProduct = {
+    categoryId: number
+    productName: string
+    productPrice: number
+    inStock: string
+}
+
 export const getAllProducts = async () => {
     const products = await api.products.$get()
 
@@ -57,6 +64,18 @@ export const updateProduct = async (value: UpdateProduct): Promise<boolean> => {
     const data = await res.json()
 
     if (!data.success) {
+        return false
+    }
+
+    return true
+}
+
+export const createProduct = async (value: CreateProduct): Promise<boolean> => {
+    const res = await api.products['create-product'].$post({
+        json: { value }
+    })
+
+    if (!res.ok) {
         return false
     }
 

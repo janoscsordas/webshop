@@ -1,5 +1,7 @@
 import CommandMenu from '@/components/dashboard/CommandMenu'
+import CreateProduct from '@/components/dashboard/CreateProduct'
 import { ModeToggle } from '@/components/Mode-Toggle'
+import { Badge } from '@/components/ui/badge'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { createLazyFileRoute, Link } from '@tanstack/react-router'
 
@@ -33,6 +35,14 @@ function ProductCreateRoute() {
           <ModeToggle />
         </div>
       </header>
+      <section className='mt-5 mb-10'>
+        <h1 className='text-[1.5rem] sm:text-[1.75rem]'>Create a new Product <Badge className='align-top'>New</Badge></h1>
+        <p className='text-[.8rem] text-muted-foreground'>You can create here a new product.</p>
+      </section>
+      <hr className='mb-5 w-full md:w-3/4 lg:w-1/2' />
+      <section className='w-full md:w-3/4 lg:w-1/2'>
+        <CreateProduct />
+      </section>
     </>
   )
 }

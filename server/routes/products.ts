@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import authMiddleware from "../lib/authMiddleware";
-import { getProductsController, removeProductController, updateProductController } from "../controllers/productsController";
+import { createProductController, getProductsController, removeProductController, updateProductController } from "../controllers/productsController";
+import { getAllProductTypes } from "../database/products";
 
 // products route
 export const productsRoute = new Hono()
@@ -20,13 +21,34 @@ export const productsRoute = new Hono()
         }
     })
     // get a single product
-    .get("/:id", async (c) => {
+    .get("/product/:id", async (c) => {
         const productId = c.req.param('id')
         return c.json({ message: `product no. ${productId}` }, 200)
     })
+    .get("/product-types", authMiddleware, async (c) => {
+        const productTypes = await getAllProductTypes()
+
+        if (!productTypes) {
+            return c.json({ error: "No product types found" }, 500)
+        }
+
+        return c.json({ productTypes }, 200)
+    })
     // create a new product
     .post("/create-product", authMiddleware, async (c) => {
-        return c.json({ message: "Product created" }, 200)
+        try {
+            const { value } = await c.req.json()
+
+            const result = await createProductController(value)
+
+            if (!result) {
+                throw new Error("Error while trying to create product")
+            }
+
+            return c.json({ success: true }, 201)
+        } catch (error: any) {
+            return c.json({ error: error.message }, 500)
+        }
     })
     .delete("/:id", authMiddleware, async (c) => {
         try {
@@ -50,7 +72,7 @@ export const productsRoute = new Hono()
             const productUpdate = await updateProductController(value)
 
             if (!productUpdate) {
-                throw new Error("Error while trying to create product")
+                throw new Error("Error while trying to update product")
             }
 
             return c.json({ success: true }, 201)
