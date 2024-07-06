@@ -9,6 +9,6 @@ export const statisticsRoute = new Hono()
 
             return c.json({ statistics }, 200)
         } catch (error: any) {
-            return c.json({ error: error.message }, 500)
+            return c.json({ message: error.message }, 500)
         }
     })

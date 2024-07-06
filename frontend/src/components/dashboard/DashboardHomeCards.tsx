@@ -11,7 +11,7 @@ async function fetchDataForDashboardHome() {
 
     if (!res.ok) {
         const errorMessage = await res.json()
-        throw new Error(errorMessage.error || 'An error has occurred while fetching statistics')
+        throw new Error(errorMessage.message || 'An error has occurred while fetching statistics')
     }
 
     const data = await res.json()

@@ -1,5 +1,3 @@
-import { useContext } from 'react'
-import { AdminUserContext } from '@/context/AdminUserContext'
 import { Home, LogOut, Package, Package2, Settings, ShoppingCart, UsersRound } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 
@@ -12,8 +10,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
-import { api } from '@/lib/api'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -26,7 +22,14 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
+import { useContext } from 'react'
+import { AdminUserContext } from '@/context/AdminUserContext'
+import { api } from '@/lib/api'
+import { useNavigate } from '@tanstack/react-router'
+
 const DashboardNavbar: React.FC = () => {
+    const navigate = useNavigate()
+
     const userContext = useContext(AdminUserContext)
     const userEmail = localStorage.getItem("email")
     if (!userContext) {
@@ -43,7 +46,7 @@ const DashboardNavbar: React.FC = () => {
         localStorage.removeItem("email")
         userContext.setUserEmail("")
 
-        window.location.reload()
+        navigate({ to: "/admin/login" })
     }
 
     return (

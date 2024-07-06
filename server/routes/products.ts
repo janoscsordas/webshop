@@ -17,7 +17,7 @@ export const productsRoute = new Hono()
             return c.json({ products }, 200)
 
         } catch (error: any) {
-            return c.json({ error: error.message }, 500)
+            return c.json({ message: error.message }, 500)
         }
     })
     // get a single product
@@ -26,13 +26,17 @@ export const productsRoute = new Hono()
         return c.json({ message: `product no. ${productId}` }, 200)
     })
     .get("/product-types", authMiddleware, async (c) => {
-        const productTypes = await getAllProductTypes()
+        try {
+            const productTypes = await getAllProductTypes()
 
-        if (!productTypes) {
-            return c.json({ error: "No product types found" }, 500)
+            if (!productTypes) {
+                throw new Error("No product types found")
+            }
+
+            return c.json({ productTypes }, 200)
+        } catch (error: any) {
+            return c.json({ message: error.message }, 500)
         }
-
-        return c.json({ productTypes }, 200)
     })
     // create a new product
     .post("/create-product", authMiddleware, async (c) => {
@@ -41,13 +45,13 @@ export const productsRoute = new Hono()
 
             const result = await createProductController(value)
 
-            if (!result) {
-                throw new Error("Error while trying to create product")
+            if (result === null) {
+                throw new Error("Product already exists!")
             }
 
-            return c.json({ success: true }, 201)
+            return c.json({ result }, 201)
         } catch (error: any) {
-            return c.json({ error: error.message }, 500)
+            return c.json({ message: error.message }, 400)
         }
     })
     .delete("/:id", authMiddleware, async (c) => {
@@ -62,7 +66,7 @@ export const productsRoute = new Hono()
 
             return c.json({ success: true, productId: productId }, 201)
         } catch (error: any) {
-            return c.json({ error: error.message }, 500)
+            return c.json({ message: error.message }, 500)
         }
     })
     .post("/update-product", authMiddleware, async (c) => {
@@ -77,6 +81,6 @@ export const productsRoute = new Hono()
 
             return c.json({ success: true }, 201)
         } catch (error: any) {
-            return c.json({ error: error.message }, 500)
+            return c.json({ message: error.message }, 500)
         }
     })

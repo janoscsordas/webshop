@@ -18,7 +18,7 @@ type Product = {
     inStock: string;
 };
 
-type UpdateProduct = {
+export type UpdateProduct = {
     id: string
     productName: string
     productPrice: number
@@ -55,10 +55,14 @@ export async function getAllProductTypes() {
     return rows as ProductTypes[]
 }
 
-export async function removeProduct(id: number): Promise<number> {
-    const [rows]: [ResultSetHeader, any] = await pool.query(`DELETE FROM products WHERE id = ?`, [id])
+export async function removeProduct(id: number): Promise<boolean> {
+    const [rows]: [ResultSetHeader, any] = await pool.query(`
+        DELETE FROM products 
+        WHERE id = ?`, 
+        [id]
+    )
 
-    return rows.affectedRows
+    return rows.affectedRows > 0
 }
 
 export async function updateProduct(value: UpdateProduct): Promise<boolean> {
@@ -68,15 +72,48 @@ export async function updateProduct(value: UpdateProduct): Promise<boolean> {
         productPrice = ?, 
         inStock = ? 
         WHERE id = ?`, 
-        [value.productName, value.productPrice, value.inStock, value.id])
+        [
+            value.productName, 
+            value.productPrice, 
+            value.inStock, 
+            value.id
+        ])
 
     return rows.affectedRows > 0
 }
 
-export async function createNewProduct(value: CreateProduct): Promise<boolean> {
-    const [rows]: [ResultSetHeader, any] = await pool.query(`INSERT INTO products
-        (categoryId, productName, productPrice, createdAt, inStock) VALUES (?, ?, ?, ?, ?)`
-        , [value.categoryId, value.productName, value.productPrice, await getCurrentDate(), value.inStock])
+export async function createNewProduct(value: CreateProduct) {
+    const [doesProductExists]: [RowDataPacket[], any] = await pool.query(`
+        SELECT productName FROM products
+        WHERE productName = ?`, 
+        [value.productName]
+    )
 
-    return rows.affectedRows > 0
+    if (doesProductExists.length > 0) {
+        return null
+    }
+
+    const [rows]: [ResultSetHeader, any] = await pool.query(`INSERT INTO products (
+        categoryId, 
+        productName, 
+        productPrice, 
+        createdAt, 
+        inStock) 
+        VALUES (
+        ?, ?, ?, ?, ?)`, 
+        [
+        value.categoryId, 
+        value.productName, 
+        value.productPrice, 
+        await getCurrentDate(), 
+        value.inStock
+    ])
+
+    const [foundProduct]: [RowDataPacket[], any] = await pool.query(`
+        SELECT * FROM products 
+        WHERE id = ?`, 
+        [rows.insertId]
+    )
+
+    return foundProduct as Product[]
 }

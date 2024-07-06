@@ -18,6 +18,8 @@ const useProducts = () => {
 
     // useEffect for setting the products state
     useEffect(() => {
+        if (data?.error) return 
+
         if (data?.products) {
             setProducts(data.products)
         }

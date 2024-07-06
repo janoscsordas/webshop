@@ -15,7 +15,7 @@ export const adminAuthRoute = new Hono()
             return c.json({ email: login.email }, 200)
         } catch (error: any) {
             // return error message
-            return c.json({ success: false, error: error.message }, 400)
+            return c.json({ message: error.message }, 400)
         }
     })
     // route for logging out the user
@@ -38,7 +38,7 @@ export const adminAuthRoute = new Hono()
     
             return c.json({ success: true }, 200)
         } catch (error: any) {
-            return c.json({ success: false, error: error.message }, 400)
+            return c.json({ message: error.message }, 400)
         }
     })
     // this route checks if the user is logged in for protected routes in the frontend
@@ -58,6 +58,6 @@ export const adminAuthRoute = new Hono()
 
             return c.json({ success: true }, 201)
         } catch (error: any) {
-            return c.json({ success: false, error: error.message }, 401)
+            return c.json({ message: error.message }, 401)
         }
     })

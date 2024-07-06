@@ -29,7 +29,7 @@ const ProductTable: React.FC = () => {
                     <Input type="text" className="sm:w-1/2 md:w-2/5 lg:w-2/6" name="search" id="search" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="Search..." />
                 </CardContent>
             </Card>
-            <Table className="border rounded-lg bg-background max-h-100dvh overflow-scroll no-scrollbar">
+            <Table className="border rounded-lg bg-background max-h-[75dvh] no-scrollbar">
                 <TableHeader>
                     <tr>
                     <TableHead className="cursor-pointer hover:text-foreground select-none" onClick={() => requestSort("categoryName")} >Category</TableHead>

@@ -9,6 +9,7 @@ export const authSchema = z.object({
     password: z.string().min(8, "Password must be at least 8 characters long").max(24, "Password can't exceed 24 characters"),
 })
 
+// login user
 export async function loginUserController(email: string, password: string, table: string = "user") {
     if (!email || !password) {
         throw new Error("Missing email or password")
@@ -47,6 +48,7 @@ export async function loginUserController(email: string, password: string, table
     return { email, token }
 }
 
+// register user
 export async function registerUserController(email: string, password: string, table: string = "user") {
     // check if email and password are not empty
     if (!email || !password) {
@@ -81,6 +83,7 @@ export async function registerUserController(email: string, password: string, ta
     return { user }
 }
 
+// this route logs out the user and removes the token from the cookie
 export async function logoutUserController(cookieHeader: string) {
     const cookies = parseCookies(cookieHeader)
     const accessToken = cookies.token
@@ -92,6 +95,7 @@ export async function logoutUserController(cookieHeader: string) {
     return accessToken
 }
 
+// this route checks if the user is logged in for protected routes in the frontend
 export async function verifyMeRoute(cookieHeader: string) {
     const cookies = parseCookies(cookieHeader)
     const accessToken = cookies.token

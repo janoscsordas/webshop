@@ -1,10 +1,10 @@
 import { z } from "zod"
+import { updateProduct, type Product } from "@/lib/products/products"
 
 import { useForm } from "@tanstack/react-form"
 import { Label } from "../ui/label"
 import { Input } from "../ui/input"
 
-import { updateProduct, type Product } from "@/lib/products/products"
 import { SheetClose, SheetFooter } from "../ui/sheet"
 import { Button } from "../ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select"
@@ -12,21 +12,20 @@ import { useState } from "react"
 import { SelectValue } from "@radix-ui/react-select"
 import AlertMessage from "./AlertMessage"
 
-const formSchema = z.object({
-    productName: z.string().min(3, { message: "Name is too short" }).max(48, { message: "Name is too long" }),
-    productPrice: z.number({ invalid_type_error: "Price must be a number" }).min(0.01, { message: "Price must be greater than 0" }).max(99999, { message: "Price is too high" }),
-    inStock: z.string()
-})
-
 interface ProductActionsProps {
     product: Product;
     products: Product[];
     setProducts: React.Dispatch<React.SetStateAction<Product[]>>
 }
+const formSchema = z.object({
+    productName: z.string().min(3).max(48),
+    productPrice: z.number().min(0.01).max(99999),
+    inStock: z.string()
+})
 
 const EditProductForm: React.FC<ProductActionsProps> = ({ product, setProducts }) => {
     const [error, setError] = useState<string>()
-    const [isSuccess, setIsSuccess] = useState<boolean>(false)
+    const [success, setSuccess] = useState<boolean>(false)
 
     const form = useForm<z.infer<typeof formSchema>>({
         defaultValues: {
@@ -36,7 +35,7 @@ const EditProductForm: React.FC<ProductActionsProps> = ({ product, setProducts }
         },
         // Define a submit handler
         onSubmit: async ({ value }) => {
-            setIsSuccess(false)
+            setSuccess(false)
 
             if (!value.productName || !value.productPrice || !value.inStock) {
                 setError("Please fill in all fields")
@@ -47,6 +46,7 @@ const EditProductForm: React.FC<ProductActionsProps> = ({ product, setProducts }
 
             if (!isValid) {
                 setError("Product's name or price is not in a valid format!")
+                return
             }
 
             const typeSafetyValues = {
@@ -58,12 +58,12 @@ const EditProductForm: React.FC<ProductActionsProps> = ({ product, setProducts }
 
             const res = await updateProduct(typeSafetyValues)
 
-            if (!res) {
-                setError("Error updating product")
+            if (res.error) {
+                setError(res.error)
                 return
             }
 
-            setIsSuccess(true)
+            setSuccess(true)
             setProducts(prevProducts => prevProducts.map(p => p.id === product.id ? { ...p, ...value } : p))
             setError('')
         },
@@ -151,7 +151,7 @@ const EditProductForm: React.FC<ProductActionsProps> = ({ product, setProducts }
                     }} />
                 </div>
                 {error && <AlertMessage variant="destructive" message={error} Title="Error" />}
-                {isSuccess && <AlertMessage variant="success" className="border-green-700 text-green-700" message="Product updated successfully!" Title="Success" /> }
+                {success && <AlertMessage variant="success" className="border-green-700 text-green-700" message="Product updated successfully!" Title="Success" /> }
                 <SheetFooter>
                     <SheetClose asChild>
                         <form.Subscribe

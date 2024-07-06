@@ -18,7 +18,7 @@ export const authRoute = new Hono()
 
             return c.json({ email: login.email } , 200)
         } catch (error: any) {
-            return c.json({ error: error.message }, 400)
+            return c.json({ message: error.message }, 400)
         }
     })
     // register route
@@ -37,7 +37,7 @@ export const authRoute = new Hono()
             return c.json({ message: "User created successfully!" }, 200)
         } catch (error: any) {
             // return error message
-            return c.json({ error: error.message }, 400)
+            return c.json({ message: error.message }, 400)
         }
     })
     .get("/logout", async (c) => {
@@ -59,7 +59,7 @@ export const authRoute = new Hono()
     
             return c.json({ success: true }, 200)
         } catch (error: any) {
-            return c.json({ success: false, error: error.message }, 400)
+            return c.json({ message: error.message }, 400)
         }
     })
     .get("/me", async (c) => {
@@ -78,6 +78,6 @@ export const authRoute = new Hono()
 
             return c.json({ success: true }, 200)
         } catch (error: any) {
-            return c.json({ success: false, error: error.message }, 400)
+            return c.json({ message: error.message }, 401)
         }
     })

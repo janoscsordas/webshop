@@ -1,11 +1,4 @@
-import { getAllProducts, removeProduct, updateProduct, createNewProduct, type CreateProduct } from "../database/products";
-
-type UpdateProduct = {
-    id: string
-    productName: string
-    productPrice: number
-    inStock: string
-}
+import { getAllProducts, removeProduct, updateProduct, createNewProduct, type CreateProduct, type UpdateProduct } from "../database/products";
 
 function formatProductDate(date: string) {
     const newDate = new Date(date)
@@ -24,7 +17,7 @@ export async function getProductsController() {
         throw new Error("No products found")
     }
 
-    const formattedProducts = []
+    let formattedProducts = []
 
     for (const product of products) {
         formattedProducts.push({
@@ -43,15 +36,7 @@ export async function getProductsController() {
 export const removeProductController = async (id: number) => {
     const removedProduct = await removeProduct(id)
 
-    if (!removedProduct) {
-        throw new Error("Error while trying to delete product")
-    }
-
-    if (removedProduct !== 1) {
-        return false
-    }
-
-    return true
+    return removedProduct
 }
 
 export const updateProductController = async (value: UpdateProduct): Promise<boolean> => {
@@ -60,11 +45,11 @@ export const updateProductController = async (value: UpdateProduct): Promise<boo
     return isUpdatedProduct
 }
 
-export const createProductController = async (newProductDetails: CreateProduct): Promise<boolean> => {
+export const createProductController = async (newProductDetails: CreateProduct) => {
     const result = await createNewProduct(newProductDetails)
 
     if (!result) {
-        return result
+        return null
     }
 
     return result

@@ -65,7 +65,7 @@ export function AdminLoginForm() {
             // if error, set error state
             if (!res.ok) {
                 const errorData = await res.json()
-                setError(errorData.error)
+                setError(errorData.message)
                 return
             }
 

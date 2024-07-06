@@ -1,7 +1,11 @@
+// api and other stuff imports
 import { api } from "@/lib/api"
 import { useForm } from "@tanstack/react-form"
 import { z } from "zod"
 
+import { createProduct, type Product } from "@/lib/products/products"
+
+// shadcn imports
 import {
     Select,
     SelectContent,
@@ -12,28 +16,33 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Label } from "../ui/label"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
-import { createProduct } from "@/lib/products/products"
 import AlertMessage from "./AlertMessage"
 
+// zod schema for validation
 const createFormSchema = z.object({
     categoryId: z.string(),
-    productName: z.string().min(3, { message: "Name is too short" }).max(48, { message: "Name is too long" }),
-    productPrice: z.number({ invalid_type_error: "Price must be a number" }).min(0.01, { message: "Price must be greater than 0" }).max(99999, { message: "Price is too high" }),
+    productName: z.string().min(3).max(48),
+    productPrice: z.number().min(0.01).max(99999),
     inStock: z.string()
 })
 
+// type for product types state
 type ProductTypes = {
     id: string
     categoryName: string
 }
 
-export default function CreateProduct() {
+interface ProductActionsProp {
+    setProducts: React.Dispatch<React.SetStateAction<Product[]>>
+}
+
+export default function CreateProduct({ setProducts }: ProductActionsProp) {
     const [productTypes, setProductTypes] = useState<ProductTypes[]>([])
-    const [isSuccess, setIsSuccess] = useState(false)
-    const [error, setError] = useState("")
+    const [success, setSuccess] = useState<string>("")
+    const [error, setError] = useState<string>("")
 
     const form = useForm<z.infer<typeof createFormSchema>>({
         defaultValues: {
@@ -43,29 +52,34 @@ export default function CreateProduct() {
             inStock: ""
         },
         onSubmit: async ({ value }) => {
-            setIsSuccess(false)
+            setSuccess("")
+            // variable for the category id
             let categoryIdFromName;
 
-            if (!value.categoryId || !value.productName || !value.productPrice || !value.inStock) {
-                setError("Please fill in all fields")
+            // validating
+            if (!value.categoryId || !value.productName || !value.productPrice || value.productPrice.toString()[0] == "0" || !value.inStock) {
+                setError("Please fill in all fields correctly!")
                 return
             }
 
+            // zod validation
             const isValid = createFormSchema.safeParse(value)
             const validation = isValid.success
-            const error = isValid.error?.errors
 
             if (!validation) {
-                setError(error![0].message)
+                setError("Product's name or price is not in a valid format!")
                 return
             }
 
+            // looping through the product types to find the id we need
             for (const type of productTypes) {
                 if (type.categoryName === value.categoryId) {
                     categoryIdFromName = type.id
+                    break
                 }
             }
             
+            // setting up a typesafe object to send
             const typeSafetyValues = {
                 categoryId: Number(categoryIdFromName),
                 productName: value.productName,
@@ -73,14 +87,25 @@ export default function CreateProduct() {
                 inStock: value.inStock === "Yes" ? "1" : "0"
             }
 
-            const res = await createProduct(typeSafetyValues)
+            // sending the typesafe object
+            const res: Product[] = await createProduct(typeSafetyValues)
 
+            // handling error
             if (!res) {
-                setError("Error creating product")
+                setError("Product already exists!")
+                return
             }
 
-            setIsSuccess(true)
+            console.log(res[0])
+
+            // setting success
+            setSuccess("Product Created Successfully!")
             setError("")
+
+            setProducts(prevProducts => [...prevProducts, res[0]])
+
+            // resetting the form
+            form.reset()
         }
     })
 
@@ -89,6 +114,8 @@ export default function CreateProduct() {
             const types = await api.products["product-types"].$get()
     
             if (!types.ok) {
+                const errorData = await types.json()
+                setError(errorData.message)
                 return
             }
     
@@ -215,7 +242,7 @@ export default function CreateProduct() {
                     />
                 </div>
                 {error && <AlertMessage variant="destructive" message={error} Title="Error" />}
-                {isSuccess && <AlertMessage variant="success" className="border-green-700 text-green-700" message="Product created successfully!" Title="Success" /> }
+                {success && <AlertMessage variant="success" className="border-green-700 text-green-700" message={success} Title="Success" /> }
                 <form.Subscribe
                     selector={(state) => [state.canSubmit, state.isSubmitting]}
                     children={([canSubmit, isSubmitting]) => (

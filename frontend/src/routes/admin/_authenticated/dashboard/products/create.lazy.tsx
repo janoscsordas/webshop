@@ -3,6 +3,7 @@ import CreateProduct from '@/components/dashboard/CreateProduct'
 import { ModeToggle } from '@/components/Mode-Toggle'
 import { Badge } from '@/components/ui/badge'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
+import useProducts from '@/hooks/useProducts'
 import { createLazyFileRoute, Link } from '@tanstack/react-router'
 
 export const Route = createLazyFileRoute('/admin/_authenticated/dashboard/products/create')({
@@ -10,7 +11,7 @@ export const Route = createLazyFileRoute('/admin/_authenticated/dashboard/produc
 })
 
 function ProductCreateRoute() {
-
+  const { setProducts } = useProducts()
 
   return (
     <>
@@ -41,7 +42,7 @@ function ProductCreateRoute() {
       </section>
       <hr className='mb-5 w-full md:w-3/4 lg:w-1/2' />
       <section className='w-full md:w-3/4 lg:w-1/2'>
-        <CreateProduct />
+        <CreateProduct setProducts={setProducts} />
       </section>
     </>
   )

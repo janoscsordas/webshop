@@ -23,61 +23,83 @@ type CreateProduct = {
     inStock: string
 }
 
+// this function is used in ProductTable
 export const getAllProducts = async () => {
-    const products = await api.products.$get()
+    try {
+        const products = await api.products.$get()
 
-    if (!products.ok) {
-        throw new Error("Error getting products")
-    }
-
-    const data = await products.json()
-
-    return data
-}
-
-export const removeProductHandler = async (id: string) => {
-
-    const res = await api.products[':id'].$delete({
-        param: {
-            id: id
+        if (!products.ok) {
+            const errorData = await products.json()
+            throw new Error(errorData.message)
         }
-    })
 
-    if (!res.ok) {
-        return false
+        const data = await products.json()
+
+        return data
+    } catch (error: any) {
+        return error
     }
-
-    const data = await res.json()
-
-    return data.success
 }
 
-export const updateProduct = async (value: UpdateProduct): Promise<boolean> => {
-    const res = await api.products['update-product'].$post({
-        json: { value }
-    })
-
-    if (!res.ok) {
-        return false
+// this function is used in ProductActions
+export const removeProductHandler = async (id: string) => {
+    try {
+        const res = await api.products[':id'].$delete({
+            param: {
+                id: id
+            }
+        })
+    
+        if (!res.ok) {
+            const errorData = await res.json()
+            throw new Error(errorData.message)
+        }
+    
+        const data = await res.json()
+    
+        return data.success
+    } catch (error: any) {
+        return error
     }
-
-    const data = await res.json()
-
-    if (!data.success) {
-        return false
-    }
-
-    return true
 }
 
-export const createProduct = async (value: CreateProduct): Promise<boolean> => {
-    const res = await api.products['create-product'].$post({
-        json: { value }
-    })
-
-    if (!res.ok) {
-        return false
+// this product is used in EditProductForm
+export const updateProduct = async (value: UpdateProduct) => {
+    try {
+        const res = await api.products['update-product'].$post({
+            json: { value }
+        })
+    
+        if (!res.ok) {
+            const errorData = await res.json()
+            throw new Error(errorData.message)
+        }
+    
+        const data = await res.json()
+        return data.success
+    } catch (error: any) {
+        return error
     }
+}
 
-    return true
+// this product is used in CreateProduct
+export const createProduct = async (value: CreateProduct) => {
+    try {
+        const res = await api.products['create-product'].$post({
+            json: { value }
+        })
+    
+        if (!res.ok) {
+            const errorData = await res.json()
+            throw new Error(errorData.message)
+        }
+    
+        const json = await res.json()
+
+        const newProduct: Product[] = json.result
+
+        return newProduct
+    } catch (error: any) {
+        return error
+    }
 }

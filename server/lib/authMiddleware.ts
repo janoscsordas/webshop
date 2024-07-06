@@ -22,7 +22,7 @@ const authMiddleware = createMiddleware(async (c, next) => {
         
         await next()
     } catch (error: any) {
-        return c.json({ error: error.message }, 401)
+        return c.json({ message: error.message }, 401)
     }
 })
 
