@@ -53,6 +53,7 @@ export default function CreateProduct({ setProducts }: ProductActionsProp) {
         },
         onSubmit: async ({ value }) => {
             setSuccess("")
+            setError("")
             // variable for the category id
             let categoryIdFromName;
 
@@ -88,21 +89,21 @@ export default function CreateProduct({ setProducts }: ProductActionsProp) {
             }
 
             // sending the typesafe object
-            const res: Product[] = await createProduct(typeSafetyValues)
+            const res: Product | string = await createProduct(typeSafetyValues)
 
             // handling error
-            if (!res) {
-                setError("Product already exists!")
+            if (typeof res == "string") {
+                setError(res)
                 return
             }
-
-            console.log(res[0])
 
             // setting success
             setSuccess("Product Created Successfully!")
             setError("")
 
-            setProducts(prevProducts => [...prevProducts, res[0]])
+            const addedProduct: Product[] = [res]
+
+            setProducts(prevProducts => [...prevProducts, addedProduct[0]])
 
             // resetting the form
             form.reset()
@@ -136,7 +137,7 @@ export default function CreateProduct({ setProducts }: ProductActionsProp) {
                     form.handleSubmit()
                 }}
             >
-                <div className="grid gap-1 grid-cols-3 mt-6 items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-3 mt-6 mb-2 items-center gap-1">
                     <form.Field
                         name="categoryId"
                         children={(field) => {
@@ -149,7 +150,7 @@ export default function CreateProduct({ setProducts }: ProductActionsProp) {
                                         value={field.state.value}
                                         onValueChange={field.handleChange}
                                     >
-                                        <SelectTrigger className="w-[180px]">
+                                        <SelectTrigger className="mt-4 sm:mt-0 w-[180px]">
                                             <SelectValue placeholder="Select a category" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -166,7 +167,7 @@ export default function CreateProduct({ setProducts }: ProductActionsProp) {
                         }}
                     />
                 </div>
-                <div className="grid grid-cols-3 mt-6 items-center gap-1">
+                <div className="grid grid-cols-1 sm:grid-cols-3 mt-6 mb-2 items-center gap-1">
                     <form.Field 
                         name="productName"
                         children={(field) => {
@@ -182,14 +183,14 @@ export default function CreateProduct({ setProducts }: ProductActionsProp) {
                                         onBlur={field.handleBlur}
                                         required={true}
                                         placeholder="Product Name"
-                                        className="w-[250px]"
+                                        className="mt-4 sm:mt-0 w-[250px]"
                                     />
                                 </>
                             )
                         }}
                     />
                 </div>
-                <div className="grid grid-cols-3 mt-6 items-center gap-1">
+                <div className="grid grid-cols-1 sm:grid-cols-3 mt-6 mb-2 items-center gap-1">
                     <form.Field 
                         name="productPrice"
                         children={(field) => {
@@ -205,14 +206,14 @@ export default function CreateProduct({ setProducts }: ProductActionsProp) {
                                         onBlur={field.handleBlur}
                                         required={true}
                                         placeholder="Product Price"
-                                        className="w-[250px]"
+                                        className="mt-4 sm:mt-0 w-[250px]"
                                     />
                                 </>
                             )
                         }}
                     />
                 </div>
-                <div className="grid grid-cols-3 mt-6 mb-2 items-center gap-1">
+                <div className="grid grid-cols-1 sm:grid-cols-3 mt-6 mb-2 items-center gap-1">
                     <form.Field 
                         name="inStock"
                         children={(field) => {
@@ -225,7 +226,7 @@ export default function CreateProduct({ setProducts }: ProductActionsProp) {
                                         value={field.state.value}
                                         onValueChange={field.handleChange}
                                     >
-                                        <SelectTrigger className="w-[180px]">
+                                        <SelectTrigger className="mt-4 sm:mt-0 w-[180px]">
                                             <SelectValue placeholder="Is it in stock?" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -246,7 +247,7 @@ export default function CreateProduct({ setProducts }: ProductActionsProp) {
                 <form.Subscribe
                     selector={(state) => [state.canSubmit, state.isSubmitting]}
                     children={([canSubmit, isSubmitting]) => (
-                        <Button className="w-2/5 block mt-6" type="submit" disabled={!canSubmit}>
+                        <Button className="w-fit sm:w-2/5 block mt-6" type="submit" disabled={!canSubmit}>
                         {isSubmitting ? 'Adding new Product..' : 'Add new Product'}
                         </Button>
                     )}

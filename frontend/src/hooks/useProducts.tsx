@@ -6,7 +6,6 @@ const useProducts = () => {
     const { isPending, isError, error, data } = useQuery({
         queryKey: ["products"],
         queryFn: getAllProducts,
-        staleTime: Infinity
     })
 
     // state for the products

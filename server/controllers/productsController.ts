@@ -1,4 +1,4 @@
-import { getAllProducts, removeProduct, updateProduct, createNewProduct, type CreateProduct, type UpdateProduct } from "../database/products";
+import { getAllProducts, removeProduct, updateProduct, createNewProduct, type CreateProduct, type UpdateProduct, type Product } from "../database/products";
 
 function formatProductDate(date: string) {
     const newDate = new Date(date)
@@ -46,11 +46,26 @@ export const updateProductController = async (value: UpdateProduct): Promise<boo
 }
 
 export const createProductController = async (newProductDetails: CreateProduct) => {
-    const result = await createNewProduct(newProductDetails)
+    const result: Product[] | null = await createNewProduct(newProductDetails)
 
     if (!result) {
         return null
     }
 
-    return result
+    const createdProduct = result[0]
+
+    if (!createdProduct) {
+        return null
+    }
+
+    const typeSafeValues: Product = {
+        id: createdProduct.id,
+        categoryName: createdProduct.categoryName,
+        productName: createdProduct.productName,
+        productPrice: createdProduct.productPrice,
+        createdAt: formatProductDate(createdProduct.createdAt),
+        inStock: createdProduct.inStock == "1" ? "Yes" : "No"
+    }
+
+    return typeSafeValues
 }

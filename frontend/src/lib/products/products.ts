@@ -23,6 +23,11 @@ type CreateProduct = {
     inStock: string
 }
 
+export type RemoveSuccess = {
+    success: boolean
+    productId: string
+}
+
 // this function is used in ProductTable
 export const getAllProducts = async () => {
     try {
@@ -55,11 +60,12 @@ export const removeProductHandler = async (id: string) => {
             throw new Error(errorData.message)
         }
     
-        const data = await res.json()
+        const data: RemoveSuccess = await res.json()
     
-        return data.success
+        return data
     } catch (error: any) {
-        return error
+        const errorMessage: string = error.message
+        return errorMessage
     }
 }
 
@@ -96,10 +102,11 @@ export const createProduct = async (value: CreateProduct) => {
     
         const json = await res.json()
 
-        const newProduct: Product[] = json.result
+        const newProduct: Product = json.result
 
         return newProduct
     } catch (error: any) {
-        return error
+        const errorMessage: string = error.message
+        return errorMessage
     }
 }

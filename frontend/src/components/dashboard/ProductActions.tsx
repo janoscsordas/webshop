@@ -30,7 +30,7 @@ import {
   
 import { MoreHorizontal } from "lucide-react"
 
-import { removeProductHandler, type Product } from "@/lib/products/products"
+import { removeProductHandler, RemoveSuccess, type Product } from "@/lib/products/products"
 import EditProductForm from "./EditProductForm"
 
 interface ProductActionsProps {
@@ -42,13 +42,15 @@ interface ProductActionsProps {
 const ProductActions: React.FC<ProductActionsProps> = ({ product, products, setProducts }) => {
 
     const handleProductRemove = async (id: string) => {
-        const res = await removeProductHandler(id)
+        const res: RemoveSuccess | string = await removeProductHandler(id)
 
-        if (!res) {
+        if (typeof res == "string") {
             throw new Error("Error removing product")
         }
 
-        setProducts(prevProducts => prevProducts.filter(product => product.id !== id))
+        if (res.success) {
+            setProducts(prevProducts => prevProducts.filter(product => product.id != id))
+        }
     }
 
     return (

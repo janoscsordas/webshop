@@ -9,7 +9,7 @@ async function getCurrentDate() {
     return `${year}-${month}-${day}`
 }
 
-type Product = {
+export type Product = {
     id: string;
     categoryName: string;
     productName: string;

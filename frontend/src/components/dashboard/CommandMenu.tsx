@@ -57,9 +57,13 @@ export function CommandMenu() {
               </Link>
             </CommandItem>
             <CommandItem>
-              <ShoppingCart className="mr-2 h-4 w-4" />
-              <span>View Orders</span>
+              <Link to="/admin/dashboard/orders" className="flex" >
+                <ShoppingCart className="mr-2 h-4 w-4" />
+                <span>View Orders</span>
+              </Link>
             </CommandItem>
+          </CommandGroup>
+          <CommandGroup heading="Tools">
             <CommandItem>
               <Calculator className="mr-2 h-4 w-4" />
               <span>Calculator</span>
