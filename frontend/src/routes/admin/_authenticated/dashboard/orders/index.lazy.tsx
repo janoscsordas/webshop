@@ -28,7 +28,7 @@ function DashboardOrdersRoute() {
         </div>
       </header>
       <section className='mt-5 mb-10 flex justify-between items-center'>
-        <h1 className='text-[1.5rem] sm:text-[1.75rem]'>Orders in the Webshop</h1>
+        <h1 className='text-[1.5rem] sm:text-[1.75rem]'>Orders from the Webshop</h1>
       </section>
       <section className='grid'>
         
