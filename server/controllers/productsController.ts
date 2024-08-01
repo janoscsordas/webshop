@@ -1,14 +1,5 @@
 import { getAllProducts, removeProduct, updateProduct, createNewProduct, type CreateProduct, type UpdateProduct, type Product } from "../database/products";
-
-function formatProductDate(date: string) {
-    const newDate = new Date(date)
-
-    const year = newDate.getFullYear()
-    const month = String(newDate.getMonth() + 1).padStart(2, '0') // Hónap 0-tól 11-ig, ezért +1 és padding nullával
-    const day = String(newDate.getDate()).padStart(2, '0') // Padding nullával
-
-    return `${year}-${month}-${day}`
-}
+import { formatDate } from "../lib/dateFormatter";
 
 export async function getProductsController() {
     const products = await getAllProducts()
@@ -17,20 +8,18 @@ export async function getProductsController() {
         throw new Error("No products found")
     }
 
-    let formattedProducts = []
-
-    for (const product of products) {
-        formattedProducts.push({
+    const formattedProducts = products.map((product) => {
+        return {
             id: product.id,
             categoryName: product.categoryName,
             productName: product.productName,
             productPrice: product.productPrice,
-            createdAt: formatProductDate(product.createdAt),
+            createdAt: formatDate(product.createdAt),
             inStock: product.inStock == "1" ? "Yes" : "No"
-        })
-    }
+        }
+    })
 
-    return formattedProducts
+    return formattedProducts as Product[]
 }
 
 export const removeProductController = async (id: number) => {
@@ -58,14 +47,14 @@ export const createProductController = async (newProductDetails: CreateProduct) 
         return null
     }
 
-    const typeSafeValues: Product = {
+    const typeSafeValues = {
         id: createdProduct.id,
         categoryName: createdProduct.categoryName,
         productName: createdProduct.productName,
         productPrice: createdProduct.productPrice,
-        createdAt: formatProductDate(createdProduct.createdAt),
+        createdAt: formatDate(createdProduct.createdAt),
         inStock: createdProduct.inStock == "1" ? "Yes" : "No"
     }
 
-    return typeSafeValues
+    return typeSafeValues as Product
 }

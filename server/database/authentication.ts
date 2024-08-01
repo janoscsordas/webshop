@@ -2,7 +2,7 @@
 import { pool } from "./getDatabaseConnection"
 
 // mysql query for login a user
-export async function loginUser(email: string, password: string, table: string = "customers") {
+export async function loginUser(email: string, password: string, table: string = process.env.BASE_AUTH_DB!) {
     const [rows]: Array<any> = await pool.query(`
         SELECT * FROM ${table} 
         WHERE email = ?`, 
@@ -15,7 +15,7 @@ export async function loginUser(email: string, password: string, table: string =
 }
 
 // mysql query for registering a user
-export async function registerUser(email: string, password: string, table: string = "customers") {
+export async function registerUser(email: string, password: string, table: string = process.env.BASE_AUTH_DB!) {
     const [isRegistered]: Array<any> = await pool.query(`
         SELECT * FROM ${table} 
         WHERE email = ?`, 

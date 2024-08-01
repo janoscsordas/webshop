@@ -8,7 +8,7 @@ const authMiddleware = createMiddleware(async (c, next) => {
         const cookiesHeader = c.req.header("Cookie")
 
         if (!cookiesHeader) {
-            throw new Error("No token found")
+            throw new Error("You are unauthorized")
         }
 
         const cookieToken = parseCookies(cookiesHeader)

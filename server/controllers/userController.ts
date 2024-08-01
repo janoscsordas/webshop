@@ -10,7 +10,7 @@ export const authSchema = z.object({
 })
 
 // login user
-export async function loginUserController(email: string, password: string, table: string = "user") {
+export async function loginUserController(email: string, password: string, table: string = process.env.BASE_AUTH_DB!) {
     if (!email || !password) {
         throw new Error("Missing email or password")
     }
@@ -49,7 +49,7 @@ export async function loginUserController(email: string, password: string, table
 }
 
 // register user
-export async function registerUserController(email: string, password: string, table: string = "user") {
+export async function registerUserController(email: string, password: string, table: string = process.env.BASE_AUTH_DB!) {
     // check if email and password are not empty
     if (!email || !password) {
         throw new Error("Missing email or password")
