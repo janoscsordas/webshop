@@ -7,6 +7,8 @@ import TableLoading from "./TableLoading"
 
 import OrderActions from "./OrderActions"
 import useOrders from "@/hooks/useOrders"
+import { Button } from "../ui/button"
+import { Link } from "@tanstack/react-router"
 
 // function for getting all orders with Hono RPC
 
@@ -25,8 +27,9 @@ const OrderTable: React.FC = () => {
                     <CardTitle className="text-lg">Search for an Order by email</CardTitle>
                     <CardDescription>Type in the customer's email to filter the list</CardDescription>
                 </CardHeader>
-                <CardContent>
-                    <Input type="text" className="sm:w-1/2 md:w-2/5 lg:w-2/6" name="search" id="search" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="Search..." />
+                <CardContent className="flex justify-between items-center gap-4">
+                    <Input type="text" className="md:w-2/3 lg:w-2/4" name="search" id="search" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="Search..." />
+                    <Link to="/admin/dashboard/orders/approved-orders"><Button>View Approved Orders</Button></Link>
                 </CardContent>
             </Card>
             <Table className="border rounded-lg bg-background max-h-[75dvh] no-scrollbar">
@@ -44,7 +47,7 @@ const OrderTable: React.FC = () => {
                         <TableLoading />
                     ): (
                         sortedOrders.map(order => (
-                            <TableRow key={order.orderId}>
+                            <TableRow key={order.id}>
                                 <TableCell>{order.email}</TableCell>
                                 <TableCell>{order.product}</TableCell>
                                 <TableCell>$ {order.price}</TableCell>

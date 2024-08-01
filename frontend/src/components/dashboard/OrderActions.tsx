@@ -21,7 +21,7 @@ import {
   
 import { MoreHorizontal } from "lucide-react"
 
-import { removeOrderHandler, RemoveSuccess, type Order } from "@/lib/orders/orders"
+import { removeOrderHandler, type Order } from "@/lib/orders/orders"
 
 interface OrderActionsProps {
     order: Order;
@@ -31,15 +31,19 @@ interface OrderActionsProps {
 const OrderActions: React.FC<OrderActionsProps> = ({ order, setOrders }) => {
 
     const handleProductRemove = async (id: string) => {
-        const res: RemoveSuccess | string = await removeOrderHandler(id)
+        const res = await removeOrderHandler(id)
 
         if (typeof res == "string") {
-            throw new Error("Error removing product")
+            throw new Error(res)
         }
 
         if (res.success) {
-            setOrders(prevOrders => prevOrders.filter(order => String(order.orderId) != id))
+            setOrders(prevOrders => prevOrders.filter(order => String(order.id) != id))
         }
+    }
+
+    const handleApproveOrder = async (id: string) => {
+
     }
 
     return (
@@ -50,11 +54,13 @@ const OrderActions: React.FC<OrderActionsProps> = ({ order, setOrders }) => {
                         <MoreHorizontal className="w-6 h-6 text-muted-foreground hover:text-foreground" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuLabel>Actions on product <strong>{order.product}</strong> by <strong>{order.email}</strong></DropdownMenuLabel>
+                        <DropdownMenuLabel>Actions on order ID <strong>{order.id}</strong></DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <AlertDialogTrigger asChild>
-                            <DropdownMenuItem>Remove</DropdownMenuItem>
+                            <DropdownMenuItem className="text-red-600">Remove</DropdownMenuItem>
                         </AlertDialogTrigger>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-green-600">Approve Order</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
                 <AlertDialogContent>
@@ -66,7 +72,7 @@ const OrderActions: React.FC<OrderActionsProps> = ({ order, setOrders }) => {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleProductRemove(String(order.orderId))}>Remove</AlertDialogAction>
+                        <AlertDialogAction onClick={() => handleProductRemove(String(order.id))}>Remove</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

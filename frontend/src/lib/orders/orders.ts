@@ -1,16 +1,11 @@
 import { api } from "../api";
 
 export type Order = {
-    orderId: number
+    id: number
     email: string
     product: string
     price: number
     orderDate: string
-}
-
-export type RemoveSuccess = {
-    success: boolean
-    orderId: string
 }
 
 export async function getAllOrders() {
@@ -44,8 +39,11 @@ export async function removeOrderHandler(id: string) {
             throw new Error(errorData.message)
         }
 
-        return true
+        const result = await response.json()
+
+        return result
     } catch (error: any) {
-        return error
+        const errorMessage: string = error.message
+        return errorMessage
     }
 }

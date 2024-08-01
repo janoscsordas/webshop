@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AdminAuthenticatedImport } from './routes/admin/_authenticated'
+import { Route as AdminAuthenticatedDashboardOrdersApprovedOrdersImport } from './routes/admin/_authenticated/dashboard/orders/approved-orders'
 
 // Create Virtual Routes
 
@@ -120,6 +121,12 @@ const AdminAuthenticatedDashboardProductsCreateLazyRoute =
     ),
   )
 
+const AdminAuthenticatedDashboardOrdersApprovedOrdersRoute =
+  AdminAuthenticatedDashboardOrdersApprovedOrdersImport.update({
+    path: '/dashboard/orders/approved-orders',
+    getParentRoute: () => AdminAuthenticatedRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -180,6 +187,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAuthenticatedDashboardIndexLazyImport
       parentRoute: typeof AdminAuthenticatedImport
     }
+    '/admin/_authenticated/dashboard/orders/approved-orders': {
+      id: '/admin/_authenticated/dashboard/orders/approved-orders'
+      path: '/dashboard/orders/approved-orders'
+      fullPath: '/admin/dashboard/orders/approved-orders'
+      preLoaderRoute: typeof AdminAuthenticatedDashboardOrdersApprovedOrdersImport
+      parentRoute: typeof AdminAuthenticatedImport
+    }
     '/admin/_authenticated/dashboard/products/create': {
       id: '/admin/_authenticated/dashboard/products/create'
       path: '/dashboard/products/create'
@@ -213,6 +227,7 @@ export const routeTree = rootRoute.addChildren({
     AdminAuthenticatedRoute: AdminAuthenticatedRoute.addChildren({
       AdminAuthenticatedDashboardCustomersLazyRoute,
       AdminAuthenticatedDashboardIndexLazyRoute,
+      AdminAuthenticatedDashboardOrdersApprovedOrdersRoute,
       AdminAuthenticatedDashboardProductsCreateLazyRoute,
       AdminAuthenticatedDashboardOrdersIndexLazyRoute,
       AdminAuthenticatedDashboardProductsIndexLazyRoute,
@@ -255,6 +270,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/admin/_authenticated/dashboard/customers",
         "/admin/_authenticated/dashboard/",
+        "/admin/_authenticated/dashboard/orders/approved-orders",
         "/admin/_authenticated/dashboard/products/create",
         "/admin/_authenticated/dashboard/orders/",
         "/admin/_authenticated/dashboard/products/"
@@ -274,6 +290,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/admin/_authenticated/dashboard/": {
       "filePath": "admin/_authenticated/dashboard/index.lazy.tsx",
+      "parent": "/admin/_authenticated"
+    },
+    "/admin/_authenticated/dashboard/orders/approved-orders": {
+      "filePath": "admin/_authenticated/dashboard/orders/approved-orders.tsx",
       "parent": "/admin/_authenticated"
     },
     "/admin/_authenticated/dashboard/products/create": {

@@ -10,7 +10,7 @@ export const getOrdersController = async () => {
 
     const typeSafeValues = orders.map((order: Order) => {
         return {
-            orderId: order.orderId,
+            id: order.id,
             email: order.email,
             product: order.product,
             price: order.price,
