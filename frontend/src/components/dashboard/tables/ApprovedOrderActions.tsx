@@ -21,29 +21,31 @@ import {
   
 import { MoreHorizontal } from "lucide-react"
 
-import { removeOrderHandler, type Order } from "@/lib/orders/orders"
+import { type ApprovedOrder, removeApprovedOrderHandler } from "@/lib/orders/orders"
+import { useState } from "react";
+
 
 interface OrderActionsProps {
-    order: Order;
-    setOrders: React.Dispatch<React.SetStateAction<Order[]>>
+    order: ApprovedOrder;
+    setApprovedOrders: React.Dispatch<React.SetStateAction<ApprovedOrder[]>>
 }
 
-const OrderActions: React.FC<OrderActionsProps> = ({ order, setOrders }) => {
+const ApprovedOrderActions: React.FC<OrderActionsProps> = ({ order, setApprovedOrders }) => {
+    const [error, setError] = useState("")
+    const [success, setSuccess] = useState(false)
 
-    const handleProductRemove = async (id: string) => {
-        const res = await removeOrderHandler(id)
+    const handleApprovedOrderRemoval = async (id: string) => {
+        setSuccess(false)
+        setError("")
+        const res = await removeApprovedOrderHandler(id)
 
         if (typeof res == "string") {
-            throw new Error(res)
+            setError(res)
+            return
         }
-
-        if (res.success) {
-            setOrders(prevOrders => prevOrders.filter(order => String(order.id) != id))
-        }
-    }
-
-    const handleApproveOrder = async (id: string) => {
-
+        
+        setApprovedOrders(prevApprovedOrders => prevApprovedOrders.filter(order => String(order.id) != id))
+        setSuccess(true)
     }
 
     return (
@@ -54,25 +56,23 @@ const OrderActions: React.FC<OrderActionsProps> = ({ order, setOrders }) => {
                         <MoreHorizontal className="w-6 h-6 text-muted-foreground hover:text-foreground" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuLabel>Actions on order ID <strong>{order.id}</strong></DropdownMenuLabel>
+                        <DropdownMenuLabel>Actions on approved order ID <strong>{order.id}</strong></DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <AlertDialogTrigger asChild>
                             <DropdownMenuItem className="text-red-600">Remove</DropdownMenuItem>
                         </AlertDialogTrigger>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-green-600">Approve Order</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
                 <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure you want to remove this order?</AlertDialogTitle>
+                    <AlertDialogTitle>Are you sure you want to remove this approved order?</AlertDialogTitle>
                     <AlertDialogDescription>
                         Once it's done there's no going back.
                     </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleProductRemove(String(order.id))}>Remove</AlertDialogAction>
+                        <AlertDialogAction onClick={() => handleApprovedOrderRemoval(String(order.id))}>Remove</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
@@ -80,4 +80,4 @@ const OrderActions: React.FC<OrderActionsProps> = ({ order, setOrders }) => {
     )
 }
 
-export default OrderActions
+export default ApprovedOrderActions

@@ -31,7 +31,7 @@ import {
 import { MoreHorizontal } from "lucide-react"
 
 import { removeProductHandler, RemoveSuccess, type Product } from "@/lib/products/products"
-import EditProductForm from "./EditProductForm"
+import EditProductForm from "../EditProductForm"
 
 interface ProductActionsProps {
     product: Product;

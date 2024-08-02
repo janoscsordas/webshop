@@ -1,5 +1,5 @@
 import CommandMenu from '@/components/dashboard/CommandMenu'
-import OrderTable from '@/components/dashboard/OrderTable'
+import OrderTable from '@/components/dashboard/tables/OrderTable'
 import { ModeToggle } from '@/components/Mode-Toggle'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { createLazyFileRoute, Link } from '@tanstack/react-router'

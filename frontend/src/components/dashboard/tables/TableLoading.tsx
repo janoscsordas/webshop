@@ -1,5 +1,5 @@
-import { Skeleton } from "../ui/skeleton";
-import { TableCell, TableRow } from "../ui/table";
+import { Skeleton } from "../../ui/skeleton";
+import { TableCell, TableRow } from "../../ui/table";
 
 export default function TableLoading() {
     return (

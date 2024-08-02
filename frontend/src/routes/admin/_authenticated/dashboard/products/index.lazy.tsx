@@ -1,5 +1,5 @@
 import CommandMenu from '@/components/dashboard/CommandMenu'
-import ProductTable from '@/components/dashboard/ProductTable'
+import ProductTable from '@/components/dashboard/tables/ProductTable'
 import { ModeToggle } from '@/components/Mode-Toggle'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'

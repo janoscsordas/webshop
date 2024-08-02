@@ -1,13 +1,13 @@
-import AlertMessage from "./AlertMessage"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { Input } from "../ui/input"
+import AlertMessage from "../AlertMessage"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card"
+import { Input } from "../../ui/input"
 
 import TableLoading from "./TableLoading"
 
 import OrderActions from "./OrderActions"
 import useOrders from "@/hooks/useOrders"
-import { Button } from "../ui/button"
+import { Button } from "../../ui/button"
 import { Link } from "@tanstack/react-router"
 
 // function for getting all orders with Hono RPC

@@ -1,7 +1,7 @@
-import AlertMessage from "./AlertMessage"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { Input } from "../ui/input"
+import AlertMessage from "../AlertMessage"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card"
+import { Input } from "../../ui/input"
 
 import TableLoading from "./TableLoading"
 
