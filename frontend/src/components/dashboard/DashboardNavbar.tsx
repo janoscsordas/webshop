@@ -1,4 +1,4 @@
-import { Home, LogOut, Package, Package2, Settings, ShoppingCart, UsersRound } from 'lucide-react'
+import { Home, LogOut, Mail, Package, Package2, Settings, ShoppingCart, UsersRound } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
@@ -120,6 +120,23 @@ const DashboardNavbar: React.FC = () => {
                         </Link>
                         </TooltipTrigger>
                         <TooltipContent side="right">Customers</TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                        <Link
+                            to="/admin/dashboard/messages"
+                            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8">
+                            {({ isActive }) => {
+                                return (
+                                    <>
+                                        <Mail className={`h-5 w-5 ${isActive ? "text-foreground" : ""}`} />
+                                        <span className="sr-only">Messages</span>
+                                    </>
+                                )
+                            }}
+                        </Link>
+                        </TooltipTrigger>
+                        <TooltipContent side="right">Messages</TooltipContent>
                     </Tooltip>
                 </nav>
                 <AlertDialog>

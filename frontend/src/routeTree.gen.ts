@@ -35,6 +35,12 @@ const AdminAuthenticatedDashboardProductsIndexLazyImport = createFileRoute(
 const AdminAuthenticatedDashboardOrdersIndexLazyImport = createFileRoute(
   '/admin/_authenticated/dashboard/orders/',
 )()
+const AdminAuthenticatedDashboardMessagesIndexLazyImport = createFileRoute(
+  '/admin/_authenticated/dashboard/messages/',
+)()
+const AdminAuthenticatedDashboardCustomersIndexLazyImport = createFileRoute(
+  '/admin/_authenticated/dashboard/customers/',
+)()
 const AdminAuthenticatedDashboardProductsCreateLazyImport = createFileRoute(
   '/admin/_authenticated/dashboard/products/create',
 )()
@@ -107,6 +113,26 @@ const AdminAuthenticatedDashboardOrdersIndexLazyRoute =
     getParentRoute: () => AdminAuthenticatedRoute,
   } as any).lazy(() =>
     import('./routes/admin/_authenticated/dashboard/orders/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AdminAuthenticatedDashboardMessagesIndexLazyRoute =
+  AdminAuthenticatedDashboardMessagesIndexLazyImport.update({
+    path: '/dashboard/messages/',
+    getParentRoute: () => AdminAuthenticatedRoute,
+  } as any).lazy(() =>
+    import('./routes/admin/_authenticated/dashboard/messages/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AdminAuthenticatedDashboardCustomersIndexLazyRoute =
+  AdminAuthenticatedDashboardCustomersIndexLazyImport.update({
+    path: '/',
+    getParentRoute: () => AdminAuthenticatedDashboardCustomersLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/admin/_authenticated/dashboard/customers/index.lazy').then(
       (d) => d.Route,
     ),
   )
@@ -201,6 +227,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAuthenticatedDashboardProductsCreateLazyImport
       parentRoute: typeof AdminAuthenticatedImport
     }
+    '/admin/_authenticated/dashboard/customers/': {
+      id: '/admin/_authenticated/dashboard/customers/'
+      path: '/'
+      fullPath: '/admin/dashboard/customers/'
+      preLoaderRoute: typeof AdminAuthenticatedDashboardCustomersIndexLazyImport
+      parentRoute: typeof AdminAuthenticatedDashboardCustomersLazyImport
+    }
+    '/admin/_authenticated/dashboard/messages/': {
+      id: '/admin/_authenticated/dashboard/messages/'
+      path: '/dashboard/messages'
+      fullPath: '/admin/dashboard/messages'
+      preLoaderRoute: typeof AdminAuthenticatedDashboardMessagesIndexLazyImport
+      parentRoute: typeof AdminAuthenticatedImport
+    }
     '/admin/_authenticated/dashboard/orders/': {
       id: '/admin/_authenticated/dashboard/orders/'
       path: '/dashboard/orders'
@@ -225,10 +265,14 @@ export const routeTree = rootRoute.addChildren({
   AboutLazyRoute,
   AdminRoute: AdminRoute.addChildren({
     AdminAuthenticatedRoute: AdminAuthenticatedRoute.addChildren({
-      AdminAuthenticatedDashboardCustomersLazyRoute,
+      AdminAuthenticatedDashboardCustomersLazyRoute:
+        AdminAuthenticatedDashboardCustomersLazyRoute.addChildren({
+          AdminAuthenticatedDashboardCustomersIndexLazyRoute,
+        }),
       AdminAuthenticatedDashboardIndexLazyRoute,
       AdminAuthenticatedDashboardOrdersApprovedOrdersRoute,
       AdminAuthenticatedDashboardProductsCreateLazyRoute,
+      AdminAuthenticatedDashboardMessagesIndexLazyRoute,
       AdminAuthenticatedDashboardOrdersIndexLazyRoute,
       AdminAuthenticatedDashboardProductsIndexLazyRoute,
     }),
@@ -272,6 +316,7 @@ export const routeTree = rootRoute.addChildren({
         "/admin/_authenticated/dashboard/",
         "/admin/_authenticated/dashboard/orders/approved-orders",
         "/admin/_authenticated/dashboard/products/create",
+        "/admin/_authenticated/dashboard/messages/",
         "/admin/_authenticated/dashboard/orders/",
         "/admin/_authenticated/dashboard/products/"
       ]
@@ -286,7 +331,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/admin/_authenticated/dashboard/customers": {
       "filePath": "admin/_authenticated/dashboard/customers.lazy.tsx",
-      "parent": "/admin/_authenticated"
+      "parent": "/admin/_authenticated",
+      "children": [
+        "/admin/_authenticated/dashboard/customers/"
+      ]
     },
     "/admin/_authenticated/dashboard/": {
       "filePath": "admin/_authenticated/dashboard/index.lazy.tsx",
@@ -298,6 +346,14 @@ export const routeTree = rootRoute.addChildren({
     },
     "/admin/_authenticated/dashboard/products/create": {
       "filePath": "admin/_authenticated/dashboard/products/create.lazy.tsx",
+      "parent": "/admin/_authenticated"
+    },
+    "/admin/_authenticated/dashboard/customers/": {
+      "filePath": "admin/_authenticated/dashboard/customers/index.lazy.tsx",
+      "parent": "/admin/_authenticated/dashboard/customers"
+    },
+    "/admin/_authenticated/dashboard/messages/": {
+      "filePath": "admin/_authenticated/dashboard/messages/index.lazy.tsx",
       "parent": "/admin/_authenticated"
     },
     "/admin/_authenticated/dashboard/orders/": {

@@ -1,14 +1,10 @@
-import AlertMessage from "../AlertMessage"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card"
 import { Input } from "../../ui/input"
 
 import TableLoading from "./TableLoading"
 
-import OrderActions from "./OrderActions"
 import useApprovedOrders from "@/hooks/useApprovedOrders"
-import { Button } from "../../ui/button"
-import { Link } from "@tanstack/react-router"
 import ApprovedOrderActions from "./ApprovedOrderActions"
 
 // function for getting all orders with Hono RPC
@@ -16,10 +12,6 @@ import ApprovedOrderActions from "./ApprovedOrderActions"
 
 const ApprovedOrderTable: React.FC = () => {
     const { isPending, isError, error, setApprovedOrders, sortedApprovedOrders, searchTerm, setSearchTerm, requestSort } = useApprovedOrders();
-
-    if (isError) {
-      return <AlertMessage Error="Error" message={error?.message} />;
-    }
 
     return (
         <>
@@ -30,7 +22,6 @@ const ApprovedOrderTable: React.FC = () => {
                 </CardHeader>
                 <CardContent className="flex justify-between items-center gap-4">
                     <Input type="text" className="md:w-2/3 lg:w-2/4" name="search" id="search" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="Search..." />
-                    <Link to="/admin/dashboard/orders/approved-orders"><Button>View Approved Orders</Button></Link>
                 </CardContent>
             </Card>
             <Table className="border rounded-lg bg-background max-h-[75dvh] no-scrollbar">

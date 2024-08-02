@@ -27,7 +27,7 @@ const OrderTable: React.FC = () => {
                     <CardTitle className="text-lg">Search for an Order by email</CardTitle>
                     <CardDescription>Type in the customer's email to filter the list</CardDescription>
                 </CardHeader>
-                <CardContent className="flex justify-between items-center gap-4">
+                <CardContent className="flex sm:justify-between sm:flex-row flex-col-reverse sm:items-center items-end sm:gap-4 gap-2">
                     <Input type="text" className="md:w-2/3 lg:w-2/4" name="search" id="search" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="Search..." />
                     <Link to="/admin/dashboard/orders/approved-orders"><Button>View Approved Orders</Button></Link>
                 </CardContent>

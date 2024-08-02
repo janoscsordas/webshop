@@ -50,18 +50,18 @@ export function CommandMenu() {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Suggestions">
-            <CommandItem>
-              <Link to="/admin/dashboard/products/create" className="flex">
+            <Link to="/admin/dashboard/products/create" className="w-full">
+              <CommandItem>
                 <Package2 className="mr-2 h-4 w-4" />
                 <span>Create new Product</span>
-              </Link>
-            </CommandItem>
-            <CommandItem>
-              <Link to="/admin/dashboard/orders" className="flex" >
-                <ShoppingCart className="mr-2 h-4 w-4" />
-                <span>View Orders</span>
-              </Link>
-            </CommandItem>
+              </CommandItem>
+            </Link>
+            <Link to="/admin/dashboard/orders" className="w-full" >
+              <CommandItem>
+                  <ShoppingCart className="mr-2 h-4 w-4" />
+                  <span>View Orders</span>
+              </CommandItem>
+            </Link>
           </CommandGroup>
           <CommandGroup heading="Tools">
             <CommandItem>
