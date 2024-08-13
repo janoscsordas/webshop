@@ -15,14 +15,13 @@ function DashBoardContent () {
 
   return (
     <>
-      {/* TODO: Add navbar to the dashboard page, so every nested route will get the same navbar */}
       <main className='flex font-geist'>
         <DashboardNavbar />
         <section className='w-full min-h-dvh bg-secondary pl-[5rem] pr-6 py-6'>
           <Outlet />
         </section>
       </main>
-      
+
     </>
   )
 }

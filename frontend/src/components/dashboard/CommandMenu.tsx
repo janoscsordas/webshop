@@ -1,6 +1,7 @@
 import * as React from "react"
 import {
   Calculator,
+  Mail,
   Package2,
   ShoppingCart,
 } from "lucide-react"
@@ -60,6 +61,12 @@ export function CommandMenu() {
               <CommandItem>
                   <ShoppingCart className="mr-2 h-4 w-4" />
                   <span>View Orders</span>
+              </CommandItem>
+            </Link>
+            <Link to="/admin/dashboard/messages" className="w-full" >
+              <CommandItem>
+                  <Mail className="mr-2 h-4 w-4" />
+                  <span>Send a Message</span>
               </CommandItem>
             </Link>
           </CommandGroup>

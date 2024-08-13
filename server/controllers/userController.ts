@@ -29,7 +29,7 @@ export async function loginUserController(email: string, password: string, table
     if (user === null) {
         throw new Error("User not found")
     }
-    
+
     // check if password is correct
     const isMatching = await Bun.password.verify(password, user.password)
 
@@ -68,7 +68,7 @@ export async function registerUserController(email: string, password: string, ta
     if (!isValid) {
         throw new Error("Invalid format for email or password")
     }
-    
+
     // hash password
     const hashedPassword = await Bun.password.hash(password)
 

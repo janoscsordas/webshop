@@ -7,6 +7,7 @@ import { adminAuthRoute } from "./routes/adminAuth"
 import { statisticsRoute } from "./routes/statistics"
 import { ordersRoute } from "./routes/orders"
 import { customersRoute } from "./routes/customers"
+import { messageRoute } from "./routes/message"
 
 const app = new Hono()
 
@@ -19,6 +20,7 @@ const apiRoutes = app.basePath("/api")
                         .route("/statistics", statisticsRoute)
                         .route("/orders", ordersRoute)
                         .route("/customers", customersRoute)
+                        .route("/message", messageRoute)
 
 export default app
 // exporting api routes type for hono rpc

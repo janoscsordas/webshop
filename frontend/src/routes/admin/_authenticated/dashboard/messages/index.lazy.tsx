@@ -1,4 +1,6 @@
 import CommandMenu from '@/components/dashboard/CommandMenu'
+import Messages from '@/components/dashboard/Messages'
+import MessageSenderForm from '@/components/dashboard/MessageSenderForm'
 import { ModeToggle } from '@/components/Mode-Toggle'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { createLazyFileRoute, Link } from '@tanstack/react-router'
@@ -27,6 +29,14 @@ function MessagesPage() {
           <ModeToggle />
         </div>
       </header>
+      <section className='w-full h-[90%] mt-10 flex flex-col items-center justify-between'>
+        <div className='w-full md:max-h-[85dvh] px-10 py-7 mb-5 overflow-y-scroll bg-background rounded-lg'>
+            <Messages />
+        </div>
+        <div className='w-full'>
+            <MessageSenderForm />
+        </div>
+      </section>
     </>
   )
 }

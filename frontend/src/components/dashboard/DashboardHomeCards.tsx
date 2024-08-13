@@ -22,7 +22,6 @@ function DashboardHomeCards() {
     const { isPending, isError, error, data } = useQuery({
         queryKey: ['statistics'],
         queryFn: fetchDataForDashboardHome,
-        staleTime: Infinity,
     })
 
     if (isError) {
@@ -36,7 +35,7 @@ function DashboardHomeCards() {
             {isPending ? (
                 <>
                     <Skeleton className='w-[300px] h-[150px] mb-3 rounded-sm' />
-                    <Skeleton className='w-[300px] h-[150px] mb-3 rounded-sm' />    
+                    <Skeleton className='w-[300px] h-[150px] mb-3 rounded-sm' />
                     <Skeleton className='w-[300px] h-[150px] mb-3 rounded-sm' />
                     <Skeleton className='w-[300px] h-[150px] mb-3 rounded-sm' />
                     <Skeleton className='w-[300px] h-[150px] mb-3 rounded-sm' />
