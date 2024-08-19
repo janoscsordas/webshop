@@ -70,13 +70,6 @@ export function CommandMenu() {
               </CommandItem>
             </Link>
           </CommandGroup>
-          <CommandGroup heading="Tools">
-            <CommandItem>
-              <Calculator className="mr-2 h-4 w-4" />
-              <span>Calculator</span>
-            </CommandItem>
-          </CommandGroup>
-          <CommandSeparator />
         </CommandList>
       </CommandDialog>
     </>

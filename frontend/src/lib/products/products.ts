@@ -1,14 +1,16 @@
 import { api } from "../api"
 
+// type for products
 export type Product = {
     id: string
     categoryName: string
     productName: string
     productPrice: number
     createdAt: string
-    inStock: string   
+    inStock: string
 }
 
+// type for product updates
 export type UpdateProduct = {
     id: string
     productName: string
@@ -16,6 +18,7 @@ export type UpdateProduct = {
     inStock: string
 }
 
+// type for product creation
 type CreateProduct = {
     categoryId: number
     productName: string
@@ -23,6 +26,7 @@ type CreateProduct = {
     inStock: string
 }
 
+// type for product removal
 export type RemoveSuccess = {
     success: boolean
     productId: string
@@ -54,14 +58,14 @@ export const removeProductHandler = async (id: string) => {
                 id: id
             }
         })
-    
+
         if (!res.ok) {
             const errorData = await res.json()
             throw new Error(errorData.message)
         }
-    
+
         const data: RemoveSuccess = await res.json()
-    
+
         return data
     } catch (error: any) {
         const errorMessage: string = error.message
@@ -75,12 +79,12 @@ export const updateProduct = async (value: UpdateProduct) => {
         const res = await api.products['update-product'].$post({
             json: { value }
         })
-    
+
         if (!res.ok) {
             const errorData = await res.json()
             throw new Error(errorData.message)
         }
-    
+
         const data = await res.json()
         return data.success
     } catch (error: any) {
@@ -94,12 +98,12 @@ export const createProduct = async (value: CreateProduct) => {
         const res = await api.products['create-product'].$post({
             json: { value }
         })
-    
+
         if (!res.ok) {
             const errorData = await res.json()
             throw new Error(errorData.message)
         }
-    
+
         const json = await res.json()
 
         const newProduct: Product = json.result

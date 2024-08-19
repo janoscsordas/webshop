@@ -1,5 +1,6 @@
 import { api } from "../api";
 
+// type for orders
 export type Order = {
     id: number
     email: string
@@ -8,6 +9,7 @@ export type Order = {
     orderDate: string
 }
 
+// type for approved orders
 export type ApprovedOrder = {
     id: number
     email: string
@@ -17,6 +19,7 @@ export type ApprovedOrder = {
     approvedDate: string
 }
 
+// type for approved orders that will be sent to backend
 export type ApprovedOrderToSend = {
     id: string
     email: string
@@ -25,6 +28,7 @@ export type ApprovedOrderToSend = {
     orderDate: string
 }
 
+// function for getting all the orders
 export async function getAllOrders() {
     try {
         const response = await api.orders.$get()
@@ -43,6 +47,7 @@ export async function getAllOrders() {
     }
 }
 
+// function for removing an order
 export async function removeOrderHandler(id: string) {
     try {
         const response = await api.orders[':id'].$delete({
@@ -65,10 +70,11 @@ export async function removeOrderHandler(id: string) {
     }
 }
 
+// function for getting all the approved orders
 export async function getAllApprovedOrders(): Promise<any> {
     try {
         const response = await api.orders["approved-orders"].$get()
-    
+
         if (!response.ok) {
             const errorData = await response.json()
             throw new Error(errorData.message)
@@ -83,9 +89,10 @@ export async function getAllApprovedOrders(): Promise<any> {
     }
 }
 
+// function for approving an order
 export async function approveOrder(id: string, email: string, product: string, price: number, orderDate: string) {
     try {
-        const orderToSend: ApprovedOrderToSend = { 
+        const orderToSend: ApprovedOrderToSend = {
             id,
             email,
             product,
@@ -110,6 +117,7 @@ export async function approveOrder(id: string, email: string, product: string, p
     }
 }
 
+// function for removing an approved order
 export async function removeApprovedOrderHandler(id: string) {
     try {
         const response = await api.orders["remove-from-approved-orders"][":id"].$delete({

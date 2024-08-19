@@ -1,3 +1,7 @@
+/*
+    This is the navbar for the dashboard
+*/
+
 import { Home, LogOut, Mail, Package, Package2, Settings, ShoppingCart, UsersRound } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 
@@ -42,7 +46,7 @@ const DashboardNavbar: React.FC = () => {
         if (!res.ok) {
             return
         }
-        
+
         localStorage.removeItem("email")
         userContext.setUserEmail("")
 
@@ -53,8 +57,8 @@ const DashboardNavbar: React.FC = () => {
         <>
             <aside className="inset-0 fixed overflow-y-scroll no-scrollbar w-max h-screen p-2 bg-background flex flex-col justify-between items-center">
                 <nav className='flex flex-col items-center gap-4 px-1 sm:py-5'>
-                    <Link 
-                        to="/admin/dashboard" 
+                    <Link
+                        to="/admin/dashboard"
                         className='group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base'>
                             <Package2 className='w-5 h-5 transition-all group-hover:scale-110 group-hover:rotate-12' />
                             <span className='sr-only'>Ryan Dashboard</span>
@@ -98,7 +102,7 @@ const DashboardNavbar: React.FC = () => {
                                     <ShoppingCart className={`h-5 w-5 ${isActive ? "text-foreground" : ""}`} />
                                     <span className="sr-only">Orders</span>
                                 </>
-                              )  
+                              )
                             }}
                         </Link>
                         </TooltipTrigger>
@@ -173,7 +177,7 @@ const DashboardNavbar: React.FC = () => {
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
-                
+
             </aside>
         </>
     )

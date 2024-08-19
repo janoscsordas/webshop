@@ -17,7 +17,7 @@ function DashBoardContent () {
     <>
       <main className='flex font-geist'>
         <DashboardNavbar />
-        <section className='w-full min-h-dvh bg-secondary pl-[5rem] pr-6 py-6'>
+        <section className='w-full h-full md:min-h-dvh bg-secondary pl-[5rem] pr-6 py-6'>
           <Outlet />
         </section>
       </main>
