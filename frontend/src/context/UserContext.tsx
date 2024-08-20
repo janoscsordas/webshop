@@ -15,7 +15,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     const [userEmail, setUserEmail] = useState<string>('')
 
     useEffect(() => {
-        const email = localStorage.getItem("email")
+        const email = localStorage.getItem("user-email")
 
         if (email) {
             setUserEmail(email)

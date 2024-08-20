@@ -23,7 +23,7 @@ export async function loginUserController(email: string, password: string, table
     }
 
     // check if user exists, 3rd option is given because of different tables
-    const user = await loginUser(email, password, table)
+    const user = await loginUser(email, table)
 
     // check if user is found
     if (user === null) {

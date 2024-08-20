@@ -1,8 +1,9 @@
 // importing database connection
+import type { ResultSetHeader, RowDataPacket } from "mysql2"
 import { pool } from "./getDatabaseConnection"
 
 // mysql query for login a user
-export async function loginUser(email: string, password: string, table: string = process.env.BASE_AUTH_DB!) {
+export async function loginUser(email: string, table: string = process.env.BASE_AUTH_DB!) {
     const [rows]: Array<any> = await pool.query(`
         SELECT * FROM ${table}
         WHERE email = ?`,
@@ -31,4 +32,10 @@ export async function registerUser(email: string, password: string, table: strin
     const affectedRows = rows.affectedRows || null
 
     return affectedRows
+}
+
+export async function updatePassword(email: string, password: string, table: string = process.env.BASE_AUTH_DB!) {
+    const [rows]: [ResultSetHeader, any] = await pool.query(`UPDATE ${table} SET password = ? WHERE email = ?`, [password, email])
+
+    return rows.affectedRows > 0
 }

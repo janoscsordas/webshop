@@ -9,7 +9,7 @@ function Index() {
     return (
         <>
             <WebshopNavbar />
-            <main className='min-h-[5000px]'>
+            <main className=''>
 
             </main>
         </>
