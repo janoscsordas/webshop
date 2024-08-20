@@ -71,7 +71,7 @@ function WebshopNavbar() {
                                 </NavigationMenuItem>
                             </NavigationMenuList>
                         </NavigationMenu>
-                        <Link className="rounded-md px-4 py-[.5rem] hover:bg-accent transition-all duration-200">About Us</Link>
+                        <Link to="/about" className="rounded-md px-4 py-[.5rem] hover:bg-accent transition-all duration-200">About Us</Link>
                         <ModeToggle />
                     </div>
                     <div className="md:hidden block w-[1.5rem] h-[1.5rem]">
@@ -92,7 +92,7 @@ function WebshopNavbar() {
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Avatar>
-                                <AvatarFallback className="bg-background"><UserCircleIcon /></AvatarFallback>
+                                <AvatarFallback className="bg-transparent"><UserCircleIcon /></AvatarFallback>
                             </Avatar>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
