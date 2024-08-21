@@ -3,6 +3,7 @@ import authMiddleware from "../lib/authMiddleware"
 import { getStatisticsData } from "../controllers/statisticsController"
 
 export const statisticsRoute = new Hono()
+    // get statistics to the frontend
     .get("/", authMiddleware, async (c) => {
         try {
             const statistics = await getStatisticsData()

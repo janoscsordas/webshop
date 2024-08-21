@@ -22,7 +22,7 @@ export const authRoute = new Hono()
             return c.json({ message: error.message }, 400)
         }
     })
-    // register route
+    // register route, used only in the frontend
     .post("/register", async (c) => {
         try {
             // get email and password from request
@@ -41,6 +41,7 @@ export const authRoute = new Hono()
             return c.json({ message: error.message }, 400)
         }
     })
+    // route for logging out the user, only used in the frontend
     .get("/logout", async (c) => {
         try {
             const cookieHeader = c.req.header("Cookie")
@@ -63,6 +64,7 @@ export const authRoute = new Hono()
             return c.json({ message: error.message }, 400)
         }
     })
+    // verifier route for the profile page in the frontend
     .get("/me", async (c) => {
         try {
             const cookieHeader = c.req.header("Cookie")
@@ -82,6 +84,7 @@ export const authRoute = new Hono()
             return c.json({ message: error.message }, 401)
         }
     })
+    // request to update password for the user
     .post("/update-password", async (c) => {
         try {
             const { email, newPassword } = await c.req.json()

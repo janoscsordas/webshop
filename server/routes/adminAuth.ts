@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { set7DaysCookie } from "../lib/cookieParser";
-import { loginUserController, logoutUserController, verifyMeRoute } from "../controllers/userController";
+import { verifyAdminRoute, loginAdminController, logoutAdminController } from "../controllers/adminController";
 
 export const adminAuthRoute = new Hono()
     // route for admin login
@@ -8,8 +8,8 @@ export const adminAuthRoute = new Hono()
         try {
             const { email, password } = await c.req.json()
 
-            const login = await loginUserController(email, password, "adminusers")
-            
+            const login = await loginAdminController(email, password, "adminusers")
+
             c.header('Set-Cookie', `token=${login.token}; Path=/; HttpOnly; Secure; Max-Age=${set7DaysCookie()}`)
 
             return c.json({ email: login.email }, 200)
@@ -26,16 +26,16 @@ export const adminAuthRoute = new Hono()
             if (!cookieHeader) {
                 throw new Error("No token found")
             }
-            
-            const logout = await logoutUserController(cookieHeader)
-    
+
+            const logout = await logoutAdminController(cookieHeader)
+
             if (!logout) {
                 throw new Error("There was an error while trying to logout the user")
             }
 
             // set the user's cookie to expire on the year 1970 so the browser will remove it and the user will be logged out
             c.header("Set-Cookie", "token=deleted; Path=/; HttpOnly; Secure; Expires=Thu, 01 Jan 1970 00:00:00 GMT")
-    
+
             return c.json({ success: true }, 200)
         } catch (error: any) {
             return c.json({ message: error.message }, 400)
@@ -50,7 +50,7 @@ export const adminAuthRoute = new Hono()
                 throw new Error("No cookie found")
             }
 
-            const verifyingUser = await verifyMeRoute(cookieHeader)
+            const verifyingUser = await verifyAdminRoute(cookieHeader)
 
             if (!verifyingUser) {
                 throw new Error("User is not logged in")

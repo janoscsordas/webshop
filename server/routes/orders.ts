@@ -5,6 +5,7 @@ import { getApprovedOrdersController, getOrdersController, removeOrderController
 import { addToApprovedOrders, removeFromApprovedOrders } from "../database/orders";
 
 export const ordersRoute = new Hono()
+    // route for getting all the orders
     .get("/", authMiddleware, async (c) => {
         try {
             const orders = await getOrdersController()
@@ -18,6 +19,7 @@ export const ordersRoute = new Hono()
             return c.json({ message: error.message }, 401)
         }
     })
+    // route for deleting a single order
     .delete("/:id", authMiddleware, async (c) => {
         try {
             const id = c.req.param("id")
@@ -37,6 +39,7 @@ export const ordersRoute = new Hono()
             return c.json({ message: error.message }, 400)
         }
     })
+    // route for getting approved orders
     .get("/approved-orders", authMiddleware, async (c) => {
         try {
             const approvedOrders = await getApprovedOrdersController()
@@ -50,6 +53,7 @@ export const ordersRoute = new Hono()
             return c.json({ message: error.message }, 401)
         }
     })
+    // route for adding an order to the approved orders
     .post("/add-to-approved-orders", authMiddleware, async (c) => {
         try {
             const { orderToSend } = await c.req.json()
@@ -69,6 +73,7 @@ export const ordersRoute = new Hono()
             return c.json({ message: error.message }, 400)
         }
     })
+    // deleting an approved order
     .delete("/remove-from-approved-orders/:id", authMiddleware, async (c) => {
         try {
             const id = c.req.param("id")

@@ -30,8 +30,8 @@ function About() {
         <>
             <WebshopNavbar />
             <main className='w-full min-h-[95dvh] font-geist pt-[5rem] px-5'>
-                <section className='w-full flex flex-col lg:flex-row justify-between items-center gap-2'>
-                    <section className='w-[45%]'>
+                <section className='w-full flex flex-col sm:flex-row justify-between items-center gap-2'>
+                    <section className='w-[85%] sm:w-[45%]'>
                         <h1 className='text-[2.5rem] font-bold mt-5'>About us</h1>
                         <p className='text-gray-500 mt-2 w-[95%] sm:w-[80%] md:w-[65%]'>We are a webshop that sells all kinds of electronic products and accessories, whether it's a laptop, a phone, a gaming console or a computer.</p>
                         <div>
@@ -50,7 +50,7 @@ function About() {
                             <p className='text-gray-500 mt-1 w-[95%] sm:w-[80%] md:w-[65%]'>We are a team of 5. We are specialized in web and software development and we are enthusiastic about tech. With a lot of experience in the industry.</p>
                         </div>
                     </section>
-                    <section className='w-[45%]'>
+                    <section className='w-[85%] sm:w-[45%]'>
                         <h1 className='text-[2.5rem] font-bold mt-5 mb-3 text-right'>Our team</h1>
                         <div className='flex flex-col gap-3'>
                             <AboutCard name="János Csordás" description="CEO and founder of Ryan Webshop. Software Developer and Web Designer." />

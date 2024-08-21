@@ -11,8 +11,10 @@ import { messageRoute } from "./routes/message"
 
 const app = new Hono()
 
+// logger that writes the requests on the console
 app.use('*', logger())
 
+// api routes
 const apiRoutes = app.basePath("/api")
                         .route("/products", productsRoute)
                         .route("/", authRoute)

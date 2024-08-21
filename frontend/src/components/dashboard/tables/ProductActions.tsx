@@ -6,7 +6,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-  
+
 import {
       AlertDialog,
       AlertDialogAction,
@@ -27,11 +27,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-  
+
 import { MoreHorizontal } from "lucide-react"
 
 import { removeProductHandler, RemoveSuccess, type Product } from "@/lib/products/products"
 import EditProductForm from "../EditProductForm"
+import { useToast } from "@/components/ui/use-toast"
 
 interface ProductActionsProps {
     product: Product;
@@ -40,7 +41,9 @@ interface ProductActionsProps {
 }
 
 const ProductActions: React.FC<ProductActionsProps> = ({ product, products, setProducts }) => {
+    const { toast } = useToast()
 
+    // removing product handler function
     const handleProductRemove = async (id: string) => {
         const res: RemoveSuccess | string = await removeProductHandler(id)
 
@@ -50,6 +53,11 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product, products, setP
 
         if (res.success) {
             setProducts(prevProducts => prevProducts.filter(product => product.id != id))
+            toast({
+                title: "Product removed",
+                description: "The product no. " + id + " has been removed successfully.",
+                duration: 4000
+            })
         }
     }
 

@@ -10,7 +10,7 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { HamIcon, MenuIcon, UserCircleIcon } from "lucide-react"
+import { MenuIcon, UserCircleIcon } from "lucide-react"
 import { ModeToggle } from "../Mode-Toggle"
 import { useContext, useState } from "react"
 import { UserContext } from "@/context/UserContext"
@@ -98,7 +98,7 @@ function WebshopNavbar() {
                         <DropdownMenuContent>
                             {userContext?.userEmail ? (
                                 <>
-                                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                    <DropdownMenuLabel>Logged in as: {userContext?.userEmail}</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <Link to="/profile"><DropdownMenuItem>Profile</DropdownMenuItem></Link>
                                     <DropdownMenuItem onClick={logoutHandler}>Log out</DropdownMenuItem>

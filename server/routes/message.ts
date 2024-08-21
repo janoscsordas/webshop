@@ -17,6 +17,7 @@ export const messageRoute = new Hono()
             return c.json({ message: error.message }, 500)
         }
     })
+    // route for sending messages
     .post("/send", authMiddleware, async (c) => {
         try {
             const { email, message } = await c.req.json()

@@ -54,6 +54,7 @@ export const productsRoute = new Hono()
             return c.json({ message: error.message }, 400)
         }
     })
+    // deleting a product
     .delete("/:id", authMiddleware, async (c) => {
         try {
             const productId = c.req.param('id')
@@ -69,6 +70,7 @@ export const productsRoute = new Hono()
             return c.json({ message: error.message }, 500)
         }
     })
+    // route for updating a product
     .post("/update-product", authMiddleware, async (c) => {
         try {
             const { value } = await c.req.json()

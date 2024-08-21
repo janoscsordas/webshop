@@ -6,7 +6,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-  
+
 import {
       AlertDialog,
       AlertDialogAction,
@@ -18,11 +18,13 @@ import {
       AlertDialogTitle,
       AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-  
+
 import { MoreHorizontal } from "lucide-react"
 
 import { approveOrder, removeOrderHandler, type Order } from "@/lib/orders/orders"
 import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import AlertMessage from "../AlertMessage";
 
 
 interface OrderActionsProps {
@@ -32,10 +34,10 @@ interface OrderActionsProps {
 
 const OrderActions: React.FC<OrderActionsProps> = ({ order, setOrders }) => {
     const [error, setError] = useState("")
-    const [success, setSuccess] = useState(false)
+
+    const { toast } = useToast()
 
     const handleOrderRemove = async (id: string) => {
-        setSuccess(false)
         setError("")
         const res = await removeOrderHandler(id)
 
@@ -43,13 +45,16 @@ const OrderActions: React.FC<OrderActionsProps> = ({ order, setOrders }) => {
             setError(res)
             return
         }
-        
+
         setOrders(prevOrders => prevOrders.filter(order => String(order.id) != id))
-        setSuccess(true)
+        toast({
+            title: "Order removed",
+            description: "The order no. " + id + " has been removed successfully.",
+            duration: 4000
+        })
     }
 
     const handleApproveOrder = async (id: string, email: string, product: string, price: number, orderDate: string) => {
-        setSuccess(false)
         setError("")
 
         const res = await approveOrder(id, email, product, price, orderDate)
@@ -60,11 +65,16 @@ const OrderActions: React.FC<OrderActionsProps> = ({ order, setOrders }) => {
         }
 
         setOrders(prevOrders => prevOrders.filter(order => String(order.id) != id))
-        setSuccess(true)
+        toast({
+            title: "Order approved",
+            description: "The order no. " + id + " has been approved successfully.",
+            duration: 4000
+        })
     }
 
     return (
         <>
+            {error && <AlertMessage Title="Error" message={error} className="absolute top-50 left-50 -translate-x-[50%] -translate-y-[50%]" variant="destructive" />}
             <AlertDialog>
                 <DropdownMenu>
                     <DropdownMenuTrigger className="flex items-center">

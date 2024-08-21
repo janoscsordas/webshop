@@ -76,7 +76,7 @@ export async function registerUserController(email: string, password: string, ta
     const user = await registerUser(email, hashedPassword, table)
 
     // check if user already exists
-    if (user === null) {
+    if (!user) {
         throw new Error("User already exists")
     }
 

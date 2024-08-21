@@ -4,7 +4,7 @@ import { pool } from "./getDatabaseConnection"
 
 // mysql query for login a user
 export async function loginUser(email: string, table: string = process.env.BASE_AUTH_DB!) {
-    const [rows]: Array<any> = await pool.query(`
+    const [rows]: [RowDataPacket[], any] = await pool.query(`
         SELECT * FROM ${table}
         WHERE email = ?`,
         [email]
@@ -16,8 +16,8 @@ export async function loginUser(email: string, table: string = process.env.BASE_
 }
 
 // mysql query for registering a user
-export async function registerUser(email: string, password: string, table: string = process.env.BASE_AUTH_DB!) {
-    const [isRegistered]: Array<any> = await pool.query(`
+export async function registerUser(email: string, password: string, table: string = process.env.BASE_AUTH_DB!): Promise<boolean> {
+    const [isRegistered]: [RowDataPacket[], any] = await pool.query(`
         SELECT * FROM ${table}
         WHERE email = ?`,
         [email]
@@ -25,16 +25,17 @@ export async function registerUser(email: string, password: string, table: strin
 
     // if user is already registered, return null
     if (isRegistered.length > 0) {
-        return null
+        return false
     }
 
-    const [rows]: Array<any> = await pool.query(`INSERT INTO ${table} (email, password) VALUES (?, ?)`, [email, password])
-    const affectedRows = rows.affectedRows || null
+    const [rows]: [ResultSetHeader, any] = await pool.query(`INSERT INTO ${table} (email, password) VALUES (?, ?)`, [email, password])
 
-    return affectedRows
+    return rows.affectedRows > 0
 }
 
-export async function updatePassword(email: string, password: string, table: string = process.env.BASE_AUTH_DB!) {
+// mysql query for updating a user's password
+// returns a boolean
+export async function updatePassword(email: string, password: string, table: string = process.env.BASE_AUTH_DB!): Promise<boolean> {
     const [rows]: [ResultSetHeader, any] = await pool.query(`UPDATE ${table} SET password = ? WHERE email = ?`, [password, email])
 
     return rows.affectedRows > 0

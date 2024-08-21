@@ -6,7 +6,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-  
+
 import {
       AlertDialog,
       AlertDialogAction,
@@ -18,11 +18,13 @@ import {
       AlertDialogTitle,
       AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-  
+
 import { MoreHorizontal } from "lucide-react"
 
 import { type ApprovedOrder, removeApprovedOrderHandler } from "@/lib/orders/orders"
 import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import AlertMessage from "../AlertMessage";
 
 
 interface OrderActionsProps {
@@ -32,10 +34,10 @@ interface OrderActionsProps {
 
 const ApprovedOrderActions: React.FC<OrderActionsProps> = ({ order, setApprovedOrders }) => {
     const [error, setError] = useState("")
-    const [success, setSuccess] = useState(false)
+
+    const { toast } = useToast()
 
     const handleApprovedOrderRemoval = async (id: string) => {
-        setSuccess(false)
         setError("")
         const res = await removeApprovedOrderHandler(id)
 
@@ -43,13 +45,18 @@ const ApprovedOrderActions: React.FC<OrderActionsProps> = ({ order, setApprovedO
             setError(res)
             return
         }
-        
+
         setApprovedOrders(prevApprovedOrders => prevApprovedOrders.filter(order => String(order.id) != id))
-        setSuccess(true)
+        toast({
+            title: "Approved Order removed",
+            description: "The approved order has been removed successfully",
+            duration: 4000
+        })
     }
 
     return (
         <>
+            {error && <AlertMessage Title="Error" message={error} className="absolute top-50 left-50 -translate-x-[50%] -translate-y-[50%]" variant="destructive" />}
             <AlertDialog>
                 <DropdownMenu>
                     <DropdownMenuTrigger className="flex items-center">

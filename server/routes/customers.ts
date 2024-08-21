@@ -3,6 +3,7 @@ import authMiddleware from "../lib/authMiddleware";
 import { getCustomersFromDatabase } from "../database/customers";
 
 export const customersRoute = new Hono()
+    // acquire all the customers data from the database into a table on the frontend
     .get("/", authMiddleware, async (c) => {
         try {
             const customers = await getCustomersFromDatabase()
