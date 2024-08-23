@@ -10,6 +10,7 @@ import {
     AccordionItem,
     AccordionTrigger,
   } from "@/components/ui/accordion"
+import Footer from '@/components/webshop/Footer'
 
 export const Route = createLazyFileRoute('/about')({
   component: About
@@ -91,9 +92,7 @@ function About() {
                     </Accordion>
                 </section>
             </main>
-            <footer className='w-full h-[2rem] text-center'>
-                <p className='text-gray-500'>Copyright &copy; {new Date().getFullYear()} Ryan Webshop. All rights reserved.</p>
-            </footer>
+            <Footer />
         </>
     )
 }
