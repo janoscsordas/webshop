@@ -21,6 +21,8 @@ import { Route as AdminAuthenticatedDashboardOrdersApprovedOrdersImport } from '
 
 const AdminImport = createFileRoute('/admin')()
 const SignupLazyImport = createFileRoute('/signup')()
+const SearchProductLazyImport = createFileRoute('/search-product')()
+const ProductsLazyImport = createFileRoute('/products')()
 const LoginLazyImport = createFileRoute('/login')()
 const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
@@ -57,6 +59,18 @@ const SignupLazyRoute = SignupLazyImport.update({
   path: '/signup',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/signup.lazy').then((d) => d.Route))
+
+const SearchProductLazyRoute = SearchProductLazyImport.update({
+  path: '/search-product',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/search-product.lazy').then((d) => d.Route),
+)
+
+const ProductsLazyRoute = ProductsLazyImport.update({
+  path: '/products',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/products.lazy').then((d) => d.Route))
 
 const LoginLazyRoute = LoginLazyImport.update({
   path: '/login',
@@ -198,6 +212,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginLazyImport
       parentRoute: typeof rootRoute
     }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/search-product': {
+      id: '/search-product'
+      path: '/search-product'
+      fullPath: '/search-product'
+      preLoaderRoute: typeof SearchProductLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -299,6 +327,8 @@ export const routeTree = rootRoute.addChildren({
   ProfileRoute: ProfileRoute.addChildren({ ProfileProfileLazyRoute }),
   AboutLazyRoute,
   LoginLazyRoute,
+  ProductsLazyRoute,
+  SearchProductLazyRoute,
   SignupLazyRoute,
   AdminRoute: AdminRoute.addChildren({
     AdminAuthenticatedRoute: AdminAuthenticatedRoute.addChildren({
@@ -327,6 +357,8 @@ export const routeTree = rootRoute.addChildren({
         "/_profile",
         "/about",
         "/login",
+        "/products",
+        "/search-product",
         "/signup",
         "/admin"
       ]
@@ -345,6 +377,12 @@ export const routeTree = rootRoute.addChildren({
     },
     "/login": {
       "filePath": "login.lazy.tsx"
+    },
+    "/products": {
+      "filePath": "products.lazy.tsx"
+    },
+    "/search-product": {
+      "filePath": "search-product.lazy.tsx"
     },
     "/signup": {
       "filePath": "signup.lazy.tsx"

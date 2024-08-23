@@ -114,3 +114,12 @@ export const createProduct = async (value: CreateProduct) => {
         return errorMessage
     }
 }
+
+export const getAllProductTypes = async () => {
+    try {
+        
+    } catch (error: any) {
+        const errorMessage: string = error.message
+        return errorMessage
+    }
+}

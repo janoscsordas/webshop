@@ -19,7 +19,7 @@ function Index() {
                     <div className='flex-1'>
                         <h2 className='text-[2rem] font-bold'>Browse our products</h2>
                         <p className='text-gray-500 w-[85%]'>Find the right product for you, or ask for a custom build down below. We are here to help you.</p>
-                        <Link to=""><Button className='mt-5'>Browse Products</Button></Link>
+                        <Link to="/products"><Button className='mt-5'>Browse Products</Button></Link>
                     </div>
                     <div className='flex-1'>
                         <img src={selectionImage} alt="Select your product" className='w-[65%] h-[65%] block mx-auto md:ml-auto' />

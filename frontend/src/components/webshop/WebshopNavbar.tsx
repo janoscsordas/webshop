@@ -59,11 +59,11 @@ function WebshopNavbar() {
                                 <NavigationMenuItem>
                                 <NavigationMenuTrigger className="bg-transparent">Products</NavigationMenuTrigger>
                                 <NavigationMenuContent className="p-3 flex gap-3">
-                                    <Link className="hover:bg-accent rounded-sm p-4 w-[220px]">
+                                    <Link to="/products" className="hover:bg-accent rounded-sm p-4 w-[220px]">
                                         <h4 className="font-bold mb-1">Access All Products</h4>
                                         <span className="text-gray-500">Click to access all the products</span>
                                     </Link>
-                                    <Link className="hover:bg-accent rounded-sm p-4 w-[220px]">
+                                    <Link to="/search-product" className="hover:bg-accent rounded-sm p-4 w-[220px]">
                                         <h4 className="font-bold mb-1">Search for a product</h4>
                                         <span className="text-gray-500">Click to begin searching for a specific product</span>
                                     </Link>
@@ -81,8 +81,8 @@ function WebshopNavbar() {
                             <DropdownMenuLabel>Menu</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <Link to="/"><DropdownMenuItem>Home</DropdownMenuItem></Link>
-                            <Link><DropdownMenuItem>All Products</DropdownMenuItem></Link>
-                            <Link><DropdownMenuItem>Search Products</DropdownMenuItem></Link>
+                            <Link to="/products"><DropdownMenuItem>All Products</DropdownMenuItem></Link>
+                            <Link to="/search-product"><DropdownMenuItem>Search Products</DropdownMenuItem></Link>
                             <Link to="/about"><DropdownMenuItem>About Us</DropdownMenuItem></Link>
                         </DropdownMenuContent>
                     </DropdownMenu>
