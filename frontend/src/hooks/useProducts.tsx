@@ -11,13 +11,15 @@ const useProducts = () => {
     // state for the products
     const [products, setProducts] = useState<Product[]>([])
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
+
+    const [groupedProducts, setGroupedProducts] = useState([])
     // sorting functions and states
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" } | null>(null)
     const [searchTerm, setSearchTerm] = useState<string>("")
 
     // useEffect for setting the products state
     useEffect(() => {
-        if (data?.error) return 
+        if (data?.error) return
 
         if (data?.products) {
             setProducts(data.products)

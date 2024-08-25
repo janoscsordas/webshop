@@ -21,6 +21,7 @@ import { Route as AdminAuthenticatedDashboardOrdersApprovedOrdersImport } from '
 
 const AdminImport = createFileRoute('/admin')()
 const SignupLazyImport = createFileRoute('/signup')()
+const ShoppingCartLazyImport = createFileRoute('/shopping-cart')()
 const SearchProductLazyImport = createFileRoute('/search-product')()
 const ProductsLazyImport = createFileRoute('/products')()
 const LoginLazyImport = createFileRoute('/login')()
@@ -59,6 +60,11 @@ const SignupLazyRoute = SignupLazyImport.update({
   path: '/signup',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/signup.lazy').then((d) => d.Route))
+
+const ShoppingCartLazyRoute = ShoppingCartLazyImport.update({
+  path: '/shopping-cart',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/shopping-cart.lazy').then((d) => d.Route))
 
 const SearchProductLazyRoute = SearchProductLazyImport.update({
   path: '/search-product',
@@ -226,6 +232,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchProductLazyImport
       parentRoute: typeof rootRoute
     }
+    '/shopping-cart': {
+      id: '/shopping-cart'
+      path: '/shopping-cart'
+      fullPath: '/shopping-cart'
+      preLoaderRoute: typeof ShoppingCartLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -329,6 +342,7 @@ export const routeTree = rootRoute.addChildren({
   LoginLazyRoute,
   ProductsLazyRoute,
   SearchProductLazyRoute,
+  ShoppingCartLazyRoute,
   SignupLazyRoute,
   AdminRoute: AdminRoute.addChildren({
     AdminAuthenticatedRoute: AdminAuthenticatedRoute.addChildren({
@@ -359,6 +373,7 @@ export const routeTree = rootRoute.addChildren({
         "/login",
         "/products",
         "/search-product",
+        "/shopping-cart",
         "/signup",
         "/admin"
       ]
@@ -383,6 +398,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/search-product": {
       "filePath": "search-product.lazy.tsx"
+    },
+    "/shopping-cart": {
+      "filePath": "shopping-cart.lazy.tsx"
     },
     "/signup": {
       "filePath": "signup.lazy.tsx"

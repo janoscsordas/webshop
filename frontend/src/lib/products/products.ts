@@ -117,9 +117,14 @@ export const createProduct = async (value: CreateProduct) => {
 
 export const getAllProductTypes = async () => {
     try {
-        
+
     } catch (error: any) {
         const errorMessage: string = error.message
         return errorMessage
     }
+}
+
+// Shopping cart functions
+export const handleAddingToCart = async (id: string) => {
+
 }

@@ -10,7 +10,7 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { MenuIcon, UserCircleIcon } from "lucide-react"
+import { MenuIcon, ShoppingCart, UserCircleIcon } from "lucide-react"
 import { ModeToggle } from "../Mode-Toggle"
 import { useContext, useState } from "react"
 import { UserContext } from "@/context/UserContext"
@@ -20,7 +20,6 @@ import { Button } from "../ui/button"
 function WebshopNavbar() {
     const userContext = useContext(UserContext)
     const [error, setError] = useState<string>("")
-
 
     const logoutHandler = async () => {
         const res = await api.logout.$get()
@@ -49,7 +48,7 @@ function WebshopNavbar() {
                     </div>
                 </div>
             }
-            <header className="fixed mx-auto flex justify-between items-center font-geist w-full h-fit py-4 px-5 bg-navColor backdrop-blur-md">
+            <header className="fixed mx-auto flex justify-between items-center font-geist w-full h-fit py-4 px-5 bg-navColor backdrop-blur-md z-10">
                 <nav className="flex items-center gap-12">
                     <Link className="font-bold text-[1rem] align-top">Ryan Webshop</Link>
                     <div className="hidden items-center gap-5 md:flex">
@@ -75,20 +74,23 @@ function WebshopNavbar() {
                         <ModeToggle />
                     </div>
                     <div className="md:hidden block w-[1.5rem] h-[1.5rem]">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger><MenuIcon /></DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuLabel>Menu</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <Link to="/"><DropdownMenuItem>Home</DropdownMenuItem></Link>
-                            <Link to="/products"><DropdownMenuItem>All Products</DropdownMenuItem></Link>
-                            <Link to="/search-product"><DropdownMenuItem>Search Products</DropdownMenuItem></Link>
-                            <Link to="/about"><DropdownMenuItem>About Us</DropdownMenuItem></Link>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger><MenuIcon /></DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuLabel>Menu</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <Link to="/"><DropdownMenuItem>Home</DropdownMenuItem></Link>
+                                <Link to="/products"><DropdownMenuItem>All Products</DropdownMenuItem></Link>
+                                <Link to="/search-product"><DropdownMenuItem>Search Products</DropdownMenuItem></Link>
+                                <Link to="/about"><DropdownMenuItem>About Us</DropdownMenuItem></Link>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </nav>
                 <div className="flex items-center gap-5">
+                    <Link title="Shopping Cart" to="/shopping-cart">
+                        <ShoppingCart />
+                    </Link>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Avatar>
