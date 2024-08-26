@@ -8,7 +8,7 @@
 - TailwindCSS
 - Shadcn/ui
 
-## This project contains a webshop and a dashboard for it
+## This project contains a webshop and a dashboard
 
 Inside the webshop the user can:
 - Sign in
