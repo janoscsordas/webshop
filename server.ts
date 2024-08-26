@@ -7,4 +7,5 @@ Bun.serve({
     fetch: app.fetch
 })
 
+// logging out the state of the server if it starts
 console.log("Server is running!")

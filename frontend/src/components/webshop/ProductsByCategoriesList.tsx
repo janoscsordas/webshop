@@ -40,11 +40,11 @@ function ProductsByCategoriesList() {
         <>
             {isPending ? (
                 <>
-                    <div className="grid gap-8">
-                        <Skeleton className="w-[85%] h-[300px] rounded-sm" />
-                        <Skeleton className="w-[85%] h-[300px] rounded-sm" />
-                        <Skeleton className="w-[85%] h-[300px] rounded-sm" />
-                        <Skeleton className="w-[85%] h-[300px] rounded-sm" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-[85%] mx-auto gap-8">
+                        <Skeleton className="w-full h-[300px] rounded-sm" />
+                        <Skeleton className="w-full h-[300px] rounded-sm" />
+                        <Skeleton className="w-full h-[300px] rounded-sm" />
+                        <Skeleton className="w-full h-[300px] rounded-sm" />
                     </div>
                 </>
             ) : (

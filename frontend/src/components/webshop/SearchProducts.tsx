@@ -21,14 +21,14 @@ function SearchProducts() {
                     onChange={e => setSearchTerm(e.target.value)}
                 />
             </section>
-            <section className="w-[90%] mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mx-auto">
+            <section className={`w-[90%] mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mx-auto ${isPending && "place-items-center"}`}>
                 {isPending ?
                     (
                         <>
-                            <Skeleton className="w-full h-[180px] rounded-md" />
-                            <Skeleton className="w-full h-[180px] rounded-md" />
-                            <Skeleton className="w-full h-[180px] rounded-md" />
-                            <Skeleton className="w-full h-[180px] rounded-md" />
+                            <Skeleton className="w-full h-[180px] block mx-auto rounded-md" />
+                            <Skeleton className="w-full h-[180px] block mx-auto rounded-md" />
+                            <Skeleton className="w-full h-[180px] block mx-auto rounded-md" />
+                            <Skeleton className="w-full h-[180px] block mx-auto rounded-md" />
                         </>
                     )
                 :
