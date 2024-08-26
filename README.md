@@ -8,6 +8,85 @@
 - TailwindCSS
 - Shadcn/ui
 
+---
+
+## Project Structure
+
+```plaintext
+├── frontend
+|   ├── public
+|   ├── src
+|   |   ├── assets
+|   |   ├── components
+|   |   ├── context
+|   |   ├── hooks
+|   |   ├── lib
+|   |   ├── routes
+|   |   ├── index.css
+|   |   ├── main.tsx
+|   |   ├── routeTree.gen.ts
+|   |   └── vite-env.d.ts
+|   ├── .eslint.cjs
+|   ├── .gitignore
+|   ├── bun.lockb
+|   ├── components.json
+|   ├── index.html
+|   ├── package.json
+|   ├── postcss.config.js
+|   ├── tailwind.config.js
+|   ├── tsconfig.json
+|   ├── .tsconfig.node.json
+|   └── vite.config.ts
+├── server
+│   ├── controllers
+│   ├── database
+│   ├── lib
+|   ├── routes
+|   └── app.ts
+├── .gitignore
+├── bun.lockb
+├── package.json
+├── README.md
+├── server.ts
+└── tsconfig.json
+ ```
+
+## Frontend file based routing structure
+
+```plaintext
+routes folder:
+├── _profile
+|   └── index.lazy.tsx : "/profile"
+├── admin
+|   ├── _authenticated
+|   |   ├── dashboard
+|   |   |   ├── customers
+|   |   |   |   └── index.lazy.tsx : "/admin/dashboard/customers"
+|   |   |   ├── messages
+|   |   |   |   └── index.lazy.tsx : "/admin/dashboard/messages"
+|   |   |   ├── orders
+|   |   |   |   ├── index.lazy.tsx : "/admin/dashboard/orders"
+|   |   |   |   └── approved-orders.lazy.tsx : "/admin/dashboard/orders/approved-orders"
+|   |   |   ├── products
+|   |   |   |   ├── index.lazy.tsx : "/admin/dashboard/products"
+|   |   |   |   └── create.lazy.tsx : "/admin/dashboard/products/create"
+|   |   |   ├── index.lazy.tsx : "/admin/dashboard"
+|   ├── _authenticated.lazy.tsx
+|   ├── index.lazy.tsx : "/admin/"
+|   └── login.lazy.tsx : "/admin/login"
+├── __root.tsx
+├── _profile.tsx
+├── about.lazy.tsx : "/about"
+├── index.lazy.tsx : "/"
+├── login.lazy.tsx : "/login"
+├── products.lazy.tsx : "/products"
+├── search-products.lazy.tsx : "/search-product"
+├── shopping-cart.lazy.tsx : "/shopping-cart"
+└── signup.lazy.tsx : "/signup"
+```
+
+---
+
 ## This project contains a webshop and a dashboard for it
 
 Inside the webshop the user can:
@@ -35,6 +114,8 @@ You will need to have Bun installed on your desktop.
 
 Prerequisites:
 - MySQL server
+- NodeJS
+- Bun
 
 Create a `.env` file and setup environment variables based on this:
 

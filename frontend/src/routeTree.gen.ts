@@ -15,7 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as ProfileImport } from './routes/_profile'
 import { Route as AdminAuthenticatedImport } from './routes/admin/_authenticated'
-import { Route as AdminAuthenticatedDashboardOrdersApprovedOrdersImport } from './routes/admin/_authenticated/dashboard/orders/approved-orders'
+import { Route as AdminAuthenticatedDashboardOrdersApprovedOrdersImport } from './routes/admin/_authenticated/dashboard/orders/approved-orders.lazy'
 
 // Create Virtual Routes
 
