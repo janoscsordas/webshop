@@ -8,7 +8,7 @@ export const adminAuthRoute = new Hono()
         try {
             const { email, password } = await c.req.json()
 
-            const login = await loginAdminController(email, password, "adminusers")
+            const login = await loginAdminController(email, password, process.env.ADMIN_TABLE!)
 
             c.header('Set-Cookie', `token=${login.token}; Path=/; HttpOnly; Secure; Max-Age=${set7DaysCookie()}`)
 

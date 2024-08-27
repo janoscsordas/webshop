@@ -12,7 +12,8 @@ import {
   } from "@/components/ui/carousel"
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
-import { Check, Cross, X } from "lucide-react";
+import { Check, X } from "lucide-react";
+import useCart from "@/hooks/useCart";
 
 type ProductGroupedByCategory = {
     [key: string]: Product[];
@@ -20,6 +21,7 @@ type ProductGroupedByCategory = {
 
 function ProductsByCategoriesList() {
     const { isPending, isError, error, sortedProducts, requestSort } = useProducts();
+    const { addToCart } = useCart()
 
     if (isError) {
         return (
@@ -49,15 +51,15 @@ function ProductsByCategoriesList() {
                 </>
             ) : (
                 <>
-                    {Object.keys(groupedProducts).map((categoryName) => (
-                        <Carousel key={categoryName} opts={{
+                    {Object.keys(groupedProducts).map((categoryName, index) => (
+                        <Carousel key={index} opts={{
                             align: "start",
                             }}
                             className="w-[85%] mx-auto">
                             <h2 className="text-[1.25rem] my-2">{categoryName}</h2>
                             <CarouselContent>
                                 {groupedProducts[categoryName].map((product) => (
-                                    <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                                    <CarouselItem className="md:basis-1/2 lg:basis-1/3" key={product.id}>
                                         <div className="p-1">
                                             <Card className="z-1 h-[225px] select-none" key={product.id}>
                                                 <CardContent className="flex flex-col justify-between h-full p-6">
@@ -67,7 +69,7 @@ function ProductsByCategoriesList() {
                                                     </div>
                                                     <div className="flex justify-between items-center">
                                                         <span className="text-green-600 font-bold">${product.productPrice}</span>
-                                                        <Button onClick={() => handleAddingToCart(product.id)}>Add to cart</Button>
+                                                        <Button onClick={() => addToCart(product)}>Add to cart</Button>
                                                     </div>
                                                 </CardContent>
                                             </Card>

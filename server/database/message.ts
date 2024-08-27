@@ -10,14 +10,14 @@ export type Message = {
 }
 
 // mysql query for getting all messages from database
-export async function getAllMessages() {
-    const [rows]: [RowDataPacket[], any] = await pool.query(`SELECT * FROM groupmessages`);
+export async function getAllMessages(table: string = process.env.MESSAGE_TABLE!) {
+    const [rows]: [RowDataPacket[], any] = await pool.query(`SELECT * FROM ${table}`);
     return rows as Message[]
 }
 
 // mysql query for sending a message to database
-export async function sendMessage(email: string,message: string) {
-    const [rows]: [ResultSetHeader, any] = await pool.query(`INSERT INTO groupmessages (user, message) VALUES (?, ?)`, [email, message]);
+export async function sendMessage(email: string, message: string, table: string = process.env.MESSAGE_TABLE!) {
+    const [rows]: [ResultSetHeader, any] = await pool.query(`INSERT INTO ${table} (user, message) VALUES (?, ?)`, [email, message]);
 
     return rows.affectedRows > 0
 }

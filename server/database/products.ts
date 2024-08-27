@@ -43,29 +43,29 @@ type ProductTypes = {
 }
 
 // mysql query for getting all products
-export async function getAllProducts(): Promise<Product[]> {
+export async function getAllProducts(table: string = process.env.PRODUCT_TABLE!): Promise<Product[]> {
     const [rows]: [RowDataPacket[], any] = await pool.query(`SELECT
         products.id,
         categories.categoryName,
         products.productName,
         products.productPrice,
         products.createdAt,
-        products.inStock FROM products
+        products.inStock FROM ${table}
         INNER JOIN categories ON categories.id = products.categoryId`)
     return rows as Product[]
 }
 
 // mysql query for getting all product types
-export async function getAllProductTypes(): Promise<ProductTypes[]> {
-    const [rows]: [RowDataPacket[], any] = await pool.query(`SELECT * FROM categories`)
+export async function getAllProductTypes(table: string = process.env.CATEGORY_TABLE!): Promise<ProductTypes[]> {
+    const [rows]: [RowDataPacket[], any] = await pool.query(`SELECT * FROM ${table}`)
 
     return rows as ProductTypes[]
 }
 
 // mysql query for removing a product
-export async function removeProduct(id: number): Promise<boolean> {
+export async function removeProduct(id: number, table: string = process.env.PRODUCT_TABLE!): Promise<boolean> {
     const [rows]: [ResultSetHeader, any] = await pool.query(`
-        DELETE FROM products
+        DELETE FROM ${table}
         WHERE id = ?`,
         [id]
     )
@@ -74,9 +74,9 @@ export async function removeProduct(id: number): Promise<boolean> {
 }
 
 // mysql query for updating a product
-export async function updateProduct(value: UpdateProduct): Promise<boolean> {
+export async function updateProduct(value: UpdateProduct, table: string = process.env.PRODUCT_TABLE!): Promise<boolean> {
     const [rows]: [ResultSetHeader, any] = await pool.query(`
-        UPDATE products SET
+        UPDATE ${table} SET
         productName = ?,
         productPrice = ?,
         inStock = ?
@@ -92,9 +92,9 @@ export async function updateProduct(value: UpdateProduct): Promise<boolean> {
 }
 
 // mysql query for creating a new product
-export async function createNewProduct(value: CreateProduct): Promise<any> {
+export async function createNewProduct(value: CreateProduct, table: string = process.env.PRODUCT_TABLE!): Promise<any> {
     const [doesProductExists]: [RowDataPacket[], any] = await pool.query(`
-        SELECT productName FROM products
+        SELECT productName FROM ${table}
         WHERE productName = ?`,
         [value.productName]
     )
@@ -103,7 +103,7 @@ export async function createNewProduct(value: CreateProduct): Promise<any> {
         return null
     }
 
-    const [rows]: [ResultSetHeader, any] = await pool.query(`INSERT INTO products (
+    const [rows]: [ResultSetHeader, any] = await pool.query(`INSERT INTO ${table} (
         categoryId,
         productName,
         productPrice,
@@ -120,7 +120,7 @@ export async function createNewProduct(value: CreateProduct): Promise<any> {
     ])
 
     const [foundProduct]: [RowDataPacket[], any] = await pool.query(`
-        SELECT * FROM products
+        SELECT * FROM ${table}
         WHERE id = ?`,
         [rows.insertId]
     )

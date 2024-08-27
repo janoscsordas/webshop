@@ -16,10 +16,13 @@ import { useContext, useState } from "react"
 import { UserContext } from "@/context/UserContext"
 import { api } from "@/lib/api"
 import { Button } from "../ui/button"
+import useCart from "@/hooks/useCart"
 
 function WebshopNavbar() {
     const userContext = useContext(UserContext)
     const [error, setError] = useState<string>("")
+
+    const { productInCartCount } = useCart()
 
     const logoutHandler = async () => {
         const res = await api.logout.$get()
@@ -88,8 +91,9 @@ function WebshopNavbar() {
                     </div>
                 </nav>
                 <div className="flex items-center gap-5">
-                    <Link title="Shopping Cart" to="/shopping-cart">
+                    <Link title="Shopping Cart" to="/shopping-cart" className="relative">
                         <ShoppingCart />
+                        <span key={productInCartCount} className="absolute rounded-full px-[.4rem] -top-2 -right-2 bg-red-500 text-[.75rem]">{productInCartCount}</span>
                     </Link>
                     <DropdownMenu>
                         <DropdownMenuTrigger>

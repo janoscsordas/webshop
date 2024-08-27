@@ -8,8 +8,8 @@ export type Customer = {
 }
 
 // mysql query for getting all customers
-export async function getCustomersFromDatabase() {
-    const [rows]: [RowDataPacket[], any] = await pool.query("SELECT id, email FROM customers")
+export async function getCustomersFromDatabase(table: string = process.env.CUSTOMER_TABLE!): Promise<Customer[]> {
+    const [rows]: [RowDataPacket[], any] = await pool.query(`SELECT id, email FROM ${table}`)
 
     return rows as Customer[]
 }

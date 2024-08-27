@@ -2,9 +2,9 @@ import CommandMenu from '@/components/dashboard/CommandMenu'
 import ApprovedOrderTable from '@/components/dashboard/tables/ApprovedOrderTable'
 import { ModeToggle } from '@/components/Mode-Toggle'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createLazyFileRoute, Link } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/admin/_authenticated/dashboard/orders/approved-orders')({
+export const Route = createLazyFileRoute('/admin/_authenticated/dashboard/orders/approved-orders')({
   component: ApprovedOrders
 })
 

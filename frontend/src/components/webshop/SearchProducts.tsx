@@ -4,9 +4,11 @@ import { Card, CardContent, CardHeader } from "../ui/card"
 import { Button } from "../ui/button"
 import { handleAddingToCart } from "@/lib/products/products"
 import { Skeleton } from "../ui/skeleton"
+import useCart from "@/hooks/useCart"
 
 function SearchProducts() {
     const { sortedProducts, searchTerm, setSearchTerm, isPending } = useProducts()
+    const { addToCart } = useCart()
 
     return (
         <>
@@ -41,7 +43,7 @@ function SearchProducts() {
                             </CardHeader>
                             <CardContent className="flex justify-between items-center">
                                 <p className="text-green-600">${product.productPrice}</p>
-                                <Button onClick={() => handleAddingToCart(product.id)}>Add to cart</Button>
+                                <Button onClick={() => addToCart(product)}>Add to cart</Button>
                             </CardContent>
                         </Card>
                     ))

@@ -122,7 +122,14 @@ Create a `.env` file and setup environment variables based on this:
 ```bash
 PORT="Your port here"
 
-BASE_AUTH_DB="your table name here"
+BASE_AUTH_DB="table name"
+ADMIN_TABLE="table name"
+CUSTOMER_TABLE="table name"
+ORDER_TABLE="table name"
+APPROVED_ORDER_TABLE="table name"
+PRODUCT_TABLE="table name"
+CATEGORY_TABLE="table name"
+MESSAGE_TABLE="table name"
 
 DB_HOST="MySQL server's Host"
 DB_USER="MySQL server's User"
@@ -147,7 +154,7 @@ To install dependencies open the root folder with terminal and:
 bun install
 ```
 
-Then go into `frontend` folder and:
+Then:
 
 ```bash
 cd frontend
@@ -159,6 +166,17 @@ To run them:
 ```bash
 bun dev
 ```
+
+Or just build the frontend:
+
+```bash
+cd frontend
+bun build
+cd ..
+bun dev
+```
+
+*The backend will be already configured to serve the static files in the dist folder.*
 
 ---
 
