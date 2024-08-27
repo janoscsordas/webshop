@@ -23,6 +23,10 @@ export const ordersRoute = new Hono()
         try {
             const { order, email } = await c.req.json()
 
+            if (!email) {
+                throw new Error("You have to be signed in to create an order")
+            }
+
             if (!order) {
                 throw new Error("No order found")
             }
