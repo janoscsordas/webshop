@@ -167,7 +167,7 @@ To run them:
 bun dev
 ```
 
-Or just build the frontend:
+Or just build the frontend [NOT ADVISABLE]:
 
 ```bash
 cd frontend
@@ -176,7 +176,7 @@ cd ..
 bun dev
 ```
 
-*The backend will be already configured to serve the static files in the dist folder.*
+*The backend can't serve static files yet. I'm working on this.*
 
 ---
 

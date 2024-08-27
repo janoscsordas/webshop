@@ -1,5 +1,6 @@
 import { Hono } from "hono"
 import { logger } from "hono/logger"
+import { serveStatic } from 'hono/bun'
 
 import { productsRoute } from "./routes/products"
 import { authRoute } from "./routes/auth"
@@ -23,6 +24,11 @@ const apiRoutes = app.basePath("/api")
                         .route("/orders", ordersRoute)
                         .route("/customers", customersRoute)
                         .route("/message", messageRoute)
+
+// [ERROR]: The server doesn't serve static files as intended
+// app.get('*', serveStatic({ root: '../frontend/dist' }))
+
+// app.get('*', serveStatic({ path: '../frontend/dist/index.html' }))
 
 export default app
 // exporting api routes type for hono rpc
