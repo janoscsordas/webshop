@@ -148,6 +148,50 @@ to generate a key you can use this command in your terminal:
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
+**another side note:** *table names can be changed however you'd like but the table columns are still hard coded into the project.*
+
+Here's all the table column's names:
+
+**id:** *it's in every table as the primary key and with auto incrementation.*
+
+**(table_columns_name - type_of_column)**
+
+**ADMIN_TABLE:**
+- email - *(varchar(255))*
+- password - *(varchar(255))*
+
+**APPROVED_ORDER_TABLE:**
+- customerId - *(int)*
+- product - *(varchar(255))*
+- price - *(int)*
+- orderDate - *(date)*
+- approvedDate - *(date)*
+
+**CATEGORY_TABLE:**
+- categoryName - *(varchar(255))*
+
+**CUSTOMER_TABLE:**
+- email - *(varchar(255))*
+- password - *(varchar(255))*
+
+**MESSAGE_TABLE:**
+- user - *(varchar(255))*
+- message - *(varchar(255))*
+- sentDate - *(timestamp)*
+
+**ORDER_TABLE:**
+- customerId - *(int)*
+- product - *(varchar(255))*
+- price - *(int)*
+- orderDate - *(date)*
+
+**PRODUCT_TABLE:**
+- categoryId - *(int)*
+- productName - *(varchar(255))*
+- productPrice - *(int)*
+- createdAt - *(date)*
+- inStock - *(smallint)*
+
 To install dependencies open the root folder with terminal and:
 
 ```bash
@@ -167,16 +211,16 @@ To run them:
 bun dev
 ```
 
-Or just build the frontend [NOT ADVISABLE]:
+Or just build the frontend:
 
 ```bash
 cd frontend
-bun build
+bun run build
 cd ..
 bun dev
 ```
 
-*The backend can't serve static files yet. I'm working on this.*
+*The backend already can serve static files, so feel free to build the React App*
 
 ---
 

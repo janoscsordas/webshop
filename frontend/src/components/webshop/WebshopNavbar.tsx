@@ -48,7 +48,7 @@ function WebshopNavbar() {
                     </div>
                 </div>
             }
-            <header key={cart.length} className="fixed mx-auto flex justify-between items-center font-geist w-full h-fit py-4 px-5 bg-navColor backdrop-blur-md z-10">
+            <header className="fixed mx-auto flex justify-between items-center font-geist w-full h-fit py-4 px-5 bg-navColor backdrop-blur-md z-10">
                 <nav className="flex items-center gap-12">
                     <Link className="font-bold text-[1rem] align-top">Ryan Webshop</Link>
                     <div className="hidden items-center gap-5 md:flex">

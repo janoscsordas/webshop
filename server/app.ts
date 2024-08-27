@@ -25,10 +25,9 @@ const apiRoutes = app.basePath("/api")
                         .route("/customers", customersRoute)
                         .route("/message", messageRoute)
 
-// [ERROR]: The server doesn't serve static files as intended
-// app.get('*', serveStatic({ root: '../frontend/dist' }))
+app.get('*', serveStatic({ root: './frontend/dist' }))
 
-// app.get('*', serveStatic({ path: '../frontend/dist/index.html' }))
+app.get('*', serveStatic({ path: './frontend/dist/index.html' }))
 
 export default app
 // exporting api routes type for hono rpc
