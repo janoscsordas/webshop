@@ -11,7 +11,6 @@ const useCart = () => {
         const savedCart = localStorage.getItem('cart')
         return savedCart ? JSON.parse(savedCart) : []
     })
-    const [productInCartCount, setProductInCartCount] = useState(0)
 
     // function for adding a product to the cart
     const addToCart = (product: Product) => {
@@ -27,10 +26,6 @@ const useCart = () => {
     const clearCart = () => {
         setCart([])
         localStorage.removeItem('cart')
-        toast({
-            title: "Cart Cleared",
-            description: "Cart has been cleared successfully!"
-        })
     }
 
     // function for removing one item from the cart
@@ -48,11 +43,9 @@ const useCart = () => {
     // watches changes in the cart state and updates local storage
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart))
-        setProductInCartCount(cart.length)
-        console.log(productInCartCount)
     }, [cart])
 
-    return { cart, productInCartCount, addToCart, clearCart, removeFromCart }
+    return { cart, addToCart, clearCart, removeFromCart }
 }
 
 export default useCart

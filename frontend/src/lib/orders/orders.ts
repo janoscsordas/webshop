@@ -28,6 +28,12 @@ export type ApprovedOrderToSend = {
     orderDate: string
 }
 
+export type CreateOrder = {
+    email: string
+    product: string
+    price: number
+}
+
 // function for getting all the orders
 export async function getAllOrders() {
     try {
@@ -44,6 +50,26 @@ export async function getAllOrders() {
 
     } catch (error: any) {
         return error
+    }
+}
+
+// function for creating a new order
+export async function createNewOrderHandler(order: CreateOrder[], email: string) {
+    try {
+        const response = await api.orders["create-order"].$post({
+            json: {order, email}
+        })
+
+        if (!response.ok) {
+            const errorData = await response.json()
+            throw new Error(errorData.message)
+        }
+
+        const result = await response.json()
+        return result.success
+    } catch (error: any) {
+        const errorMessage: string = error.message
+        return errorMessage
     }
 }
 

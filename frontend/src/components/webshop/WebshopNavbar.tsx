@@ -16,13 +16,10 @@ import { useContext, useState } from "react"
 import { UserContext } from "@/context/UserContext"
 import { api } from "@/lib/api"
 import { Button } from "../ui/button"
-import useCart from "@/hooks/useCart"
 
 function WebshopNavbar() {
     const userContext = useContext(UserContext)
     const [error, setError] = useState<string>("")
-
-    const { productInCartCount } = useCart()
 
     const logoutHandler = async () => {
         const res = await api.logout.$get()
@@ -51,7 +48,7 @@ function WebshopNavbar() {
                     </div>
                 </div>
             }
-            <header className="fixed mx-auto flex justify-between items-center font-geist w-full h-fit py-4 px-5 bg-navColor backdrop-blur-md z-10">
+            <header key={cart.length} className="fixed mx-auto flex justify-between items-center font-geist w-full h-fit py-4 px-5 bg-navColor backdrop-blur-md z-10">
                 <nav className="flex items-center gap-12">
                     <Link className="font-bold text-[1rem] align-top">Ryan Webshop</Link>
                     <div className="hidden items-center gap-5 md:flex">
@@ -91,9 +88,8 @@ function WebshopNavbar() {
                     </div>
                 </nav>
                 <div className="flex items-center gap-5">
-                    <Link title="Shopping Cart" to="/shopping-cart" className="relative">
+                    <Link title="Shopping Cart" to="/shopping-cart">
                         <ShoppingCart />
-                        <span key={productInCartCount} className="absolute rounded-full px-[.4rem] -top-2 -right-2 bg-red-500 text-[.75rem]">{productInCartCount}</span>
                     </Link>
                     <DropdownMenu>
                         <DropdownMenuTrigger>

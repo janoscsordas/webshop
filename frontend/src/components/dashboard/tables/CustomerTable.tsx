@@ -8,7 +8,7 @@ import useCustomers from "@/hooks/useCustomers"
 
 
 const CustomerTable: React.FC = () => {
-    const { isPending, isError, error, setCustomers, sortedCustomers, searchTerm, setSearchTerm, requestSort } = useCustomers();
+    const { isPending, isError, error, sortedCustomers, searchTerm, setSearchTerm, requestSort } = useCustomers();
 
     if (isError) {
       return <AlertMessage Error="Error" message={error?.message} />;

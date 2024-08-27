@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import authMiddleware from "../lib/authMiddleware";
 
 import { getApprovedOrdersController, getOrdersController, removeOrderController } from "../controllers/ordersController";
-import { addToApprovedOrders, removeFromApprovedOrders } from "../database/orders";
+import { addToApprovedOrders, createOrder, removeFromApprovedOrders } from "../database/orders";
 
 export const ordersRoute = new Hono()
     // route for getting all the orders
@@ -17,6 +17,25 @@ export const ordersRoute = new Hono()
             return c.json( { orders: orders } , 200)
         } catch (error: any) {
             return c.json({ message: error.message }, 401)
+        }
+    })
+    .post("/create-order", async (c) => {
+        try {
+            const { order, email } = await c.req.json()
+
+            if (!order) {
+                throw new Error("No order found")
+            }
+
+            const orders = await createOrder(order, email)
+
+            if (!orders) {
+                throw new Error("There was an error while trying to create an order")
+            }
+
+            return c.json({ success: true }, 200)
+        } catch (error: any) {
+            return c.json({ message: error.message }, 400)
         }
     })
     // route for deleting a single order
