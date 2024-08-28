@@ -4,6 +4,7 @@
 
 - React (TS)
 - Hono (Client, RPC, Server)
+- Tanstack (Router, Form, Query)
 - Bun
 - TailwindCSS
 - Shadcn/ui
