@@ -193,6 +193,8 @@ Here's all the table column's names:
 - createdAt - *(date)*
 - inStock - *(smallint)*
 
+**There is an example database structure in the /database folder if you'd like to use that.**
+
 To install dependencies open the root folder with terminal and:
 
 ```bash
