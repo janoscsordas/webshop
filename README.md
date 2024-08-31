@@ -25,19 +25,8 @@
 |   |   ├── routes
 |   |   ├── index.css
 |   |   ├── main.tsx
-|   |   ├── routeTree.gen.ts
-|   |   └── vite-env.d.ts
-|   ├── .eslint.cjs
-|   ├── .gitignore
-|   ├── bun.lockb
-|   ├── components.json
-|   ├── index.html
-|   ├── package.json
-|   ├── postcss.config.js
-|   ├── tailwind.config.js
-|   ├── tsconfig.json
-|   ├── .tsconfig.node.json
-|   └── vite.config.ts
+|   |   └── routeTree.gen.ts
+|   └── index.html
 ├── server
 │   ├── controllers
 │   ├── database
@@ -45,11 +34,8 @@
 |   ├── routes
 |   └── app.ts
 ├── .gitignore
-├── bun.lockb
-├── package.json
 ├── README.md
-├── server.ts
-└── tsconfig.json
+└── server.ts
  ```
 
 ## Frontend file based routing structure
