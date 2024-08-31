@@ -115,8 +115,8 @@ You will need to have Bun installed on your desktop.
 
 Prerequisites:
 - MySQL server
-- NodeJS
-- Bun
+- [NodeJS](https://nodejs.org/en/)
+- [Bun](https://bun.sh/)
 
 Create a `.env` file and setup environment variables based on this:
 
