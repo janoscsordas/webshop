@@ -60,7 +60,7 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product, products, setP
             })
         }
     }
-
+    
     return (
         <>
             <Sheet>
